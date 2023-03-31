@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, TextInput } from "react-native";
 import Text from '@kaloraat/react-native-text';
 
-const UserInput = ({name, value, setValue, secureTextEntry}) => {
+const UserInput = ({name, value, setValue, secureTextEntry, autoCapitalize}) => {
     return (
 
         <View style={styles.inputData}>
@@ -10,7 +10,8 @@ const UserInput = ({name, value, setValue, secureTextEntry}) => {
             <TextInput style={styles.inputField} 
             value = {value}
             onChangeText = {(text) => setValue(text)}
-            secureTextEntry = {secureTextEntry}></TextInput>
+            secureTextEntry = {secureTextEntry}
+            autoCapitalize={autoCapitalize}></TextInput>
         
         </View>
     )

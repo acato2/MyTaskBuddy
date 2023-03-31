@@ -3,12 +3,22 @@ import { StyleSheet, View, TouchableOpacity, Image, Dimensions } from "react-nat
 import Text from '@kaloraat/react-native-text';
 import UserInput from "../components/UserInput";
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
-const Login = () => {
+
+
+const Login = ({navigation}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    /*const navigation = useNavigation();
+
+    const handleButtonPress = () => {
+        navigation.navigate('Registration');
+      }*/
+      
 
     const handleLogin = async () =>{
         if(!username || !password){
@@ -39,7 +49,7 @@ const Login = () => {
                 <Text dark bold style={{color:'#FFFFFF' , fontSize:16}}>Prijavi se</Text>
             </TouchableOpacity>
             <Text bold style={{marginTop:20}}>Nemate račun?</Text>
-            <TouchableOpacity style={styles.buttonRegistration}>
+            <TouchableOpacity style={styles.buttonRegistration} onPress={()=>navigation.navigate('Registration')}>
                 <Text dark bold style={{color:'#000000' , fontSize:16}}>Registruj se</Text>
             </TouchableOpacity>
         </View>
