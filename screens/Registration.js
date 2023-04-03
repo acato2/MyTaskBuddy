@@ -71,6 +71,7 @@ class Registration extends Component {
     onSubmitSteps = () => {
         console.log('called on submit step.');
         console.log(this.state.firstName,this.state.lastName,selectedAvatar,this.state.username,this.state.password)
+        this.props.navigation.navigate('HomePage');
     };
 
     render() {

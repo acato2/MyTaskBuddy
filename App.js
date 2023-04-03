@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View } from 'react-native';
 import Login from './screens/Login';
 import Registration from './screens/Registration';
+import HomePage from './screens/HomePage';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -16,6 +17,7 @@ export default function App() {
           component={Login}
         />
         <Stack.Screen name="Registration" component={Registration} />
+        <Stack.Screen name="HomePage" component={HomePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

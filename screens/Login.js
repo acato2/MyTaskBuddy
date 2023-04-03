@@ -26,11 +26,12 @@ const Login = ({navigation}) => {
             return;
         }
         try{
-            const {data} = await axios.post('http://localhost:3000/login',{
+            /*const {data} = await axios.post('http://localhost:3000/login',{
                 username,
                 password
-            })
-            console.log("LOGIN SUCCESSFULL ",data);
+            })*/
+            //console.log("LOGIN SUCCESSFULL ",data);
+            navigation.navigate('HomePage');
         }
         catch (err){
             console.log(err);
