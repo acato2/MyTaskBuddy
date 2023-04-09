@@ -8,6 +8,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import EditProfile from './screens/EditProfile';
 import { Ionicons } from '@expo/vector-icons';
+import Task from './screens/Task';
 
 
 const Stack = createNativeStackNavigator();
@@ -58,6 +59,7 @@ export default function App() {
         <Stack.Screen name="Registration" component={Registration} />
         <Stack.Screen name="HomePage" component={Home} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="Task" component={Task} />
       </Stack.Navigator>
     </NavigationContainer>
   );

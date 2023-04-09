@@ -1,9 +1,15 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import Calendar from '../components/Calendar';
 import TaskCard from '../components/TaskCard';
+import Task from './Task';
 
-const HomePage = () => {
+const HomePage = ({navigation}) => {
+    const [selectedDate, setSelectedDate] = useState(new Date());
+
+    const handleDateChange = (date) => {
+    setSelectedDate(date);
+    };
     return (
         <View style={styles.container}>
             <View style={styles.row}>
@@ -22,12 +28,12 @@ const HomePage = () => {
                 </View>
             </View>
 
-            <Calendar style={{ flex: 1}} />
+            <Calendar style={{ flex: 1}} onDateChange={handleDateChange}/>
             <ScrollView style={{ height: 580 }}>
-                <TaskCard startTime="9:00" endTime="10:00 AM" activity="Morning Exercise" progress={70}/>
-                <TaskCard startTime="10:00" endTime="11:00"  activity="Meeting with John" progress={20}/>
-                <TaskCard startTime="11:00" endTime="12:00"  activity="Lunch with Jane" progress={50} />
-                <TaskCard startTime="12:00" endTime="13:00"  activity="Presentation preparation" progress={100}/>
+                <TaskCard startTime="9:00" endTime="10:00 AM" activity="Morning Exercise" progress={70} onPress={()=>navigation.navigate('Task', {activityName:'Morning Exercise',date:selectedDate.toString()})}/>
+                <TaskCard startTime="10:00" endTime="11:00"  activity="Meeting with John" progress={20} onPress={()=>navigation.navigate('Task', {activityName:'Meeting with John',date:selectedDate.toString()})}/>
+                <TaskCard startTime="11:00" endTime="12:00"  activity="Lunch with Jane" progress={50} onPress={()=>navigation.navigate('Task', {activityName:'Lunch with Jane',date:selectedDate.toString()})}/>
+                <TaskCard startTime="12:00" endTime="13:00"  activity="Presentation preparation" progress={100} onPress={()=>navigation.navigate('Task', {activityName:'Presentation preparation',date:selectedDate.toString()})}/>
             </ScrollView>
         </View>
 

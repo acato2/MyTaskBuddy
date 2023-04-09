@@ -3,13 +3,14 @@ import moment from 'moment';
 import 'moment/locale/bs'; // Bosnian locale
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 
-const Calendar = () => {
+const Calendar = ({ onDateChange }) => {
   const [selectedDate, setSelectedDate] = useState(moment()); // Current date
   const [scrollPosition, setScrollPosition] = useState(0); // Initial scroll position
   const daysToShow = 14; // Show 7 days at a time
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
+    onDateChange(date.toDate());
     // Do something else
     console.log(date)
   };
