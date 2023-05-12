@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     width: 350,
-    height: 150,
+    height: 140,
     borderColor: '#C8C8C8',
     borderWidth: 1
   },
@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     position: 'absolute',
-    top: 15,
-    right: 10,
+    top: 0,
+    right: 0,
   },
   locationText: {
     fontSize: 16,

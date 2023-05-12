@@ -40,8 +40,11 @@ function Home() {
           return getTabBarIcon(iconName)({ focused, color, size });
         },
         headerShown: false,
-        tabBarActiveTintColor: 'blue',
-        tabBarInactiveTintColor: 'gray'
+        tabBarActiveTintColor: 'black',
+        tabBarInactiveTintColor: 'gray',
+        tabBarLabelStyle: {
+          fontSize: 13
+        }
       })}
     >
       <Tab.Screen name="Home" component={HomePage} />

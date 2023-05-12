@@ -11,18 +11,17 @@ const ProgressBar = ({ progress }) => {
       borderRadius: 10,
       backgroundColor: '#ccc',
       marginVertical: 10,
-      alignSelf:'center'
-
+      alignSelf: 'center',
     },
     bar: {
       width: `${progress}%`,
       height: 15,
       borderRadius: 10,
-      backgroundColor: '#0066cc',
+      backgroundColor: progress === 100 ? '#66ff66' : '#66b3ff',
     },
     text: {
       color: '#0066cc',
-      fontSize: 12,
+      fontSize: 15,
       fontWeight: 'bold',
       textAlign: 'center',
     },
@@ -33,7 +32,6 @@ const ProgressBar = ({ progress }) => {
       <View style={styles.container}>
         <View style={styles.bar} />
       </View>
-      <Text style={styles.text}>{progress}%</Text>
     </View>
   );
 };
