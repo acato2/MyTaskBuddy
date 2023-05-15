@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, View, TextInput,Dimensions } from "react-native";
 import Text from '@kaloraat/react-native-text';
-
+const { width, height } = Dimensions.get('window');
 const UserInput = ({name, value, setValue, secureTextEntry, autoCapitalize}) => {
     return (
 
@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
         marginHorizontal:24
     },
     label:{
-        marginBottom:5
+        marginBottom:5,
+        fontSize:width*0.03
     },
     inputField: {
         backgroundColor: '#FFFFFF',
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#CCCCCC',
         padding: 10,
-        width: 280,
+        width: 0.7 * width,
         marginBottom:10
 
 
