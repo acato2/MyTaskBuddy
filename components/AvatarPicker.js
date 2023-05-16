@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, ScrollView, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 
+const { width, height } = Dimensions.get('window');
 const AvatarPicker = ({ avatars, onSelectAvatar }) => {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
 
@@ -31,16 +32,16 @@ const AvatarPicker = ({ avatars, onSelectAvatar }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 100,
-    marginBottom: 20,
+    height: height * 0.15,
+    marginBottom: height * 0.02,
   },
   avatarContainer: {
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 50,
-    marginRight: 10,
-    width: 80,
-    height: 80,
+    borderRadius: width * 0.1,
+    marginRight: width * 0.02,
+    width: width * 0.2,
+    height: width * 0.2,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -49,9 +50,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   avatar: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: width * 0.15,
+    height: width * 0.15,
+    borderRadius: (width * 0.15) / 2,
   },
 });
 

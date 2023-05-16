@@ -1,9 +1,10 @@
 import React, { useState, Component } from "react";
-import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image,Dimensions } from "react-native";
 import Text from '@kaloraat/react-native-text';
 import UserInput from "../components/UserInput";
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import AvatarPicker from "../components/AvatarPicker";
+import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
 
 const avatars = [
     { id: 1, url: 'https://cdn-icons-png.flaticon.com/512/4333/4333609.png' },
@@ -13,6 +14,8 @@ const avatars = [
     { id: 5, url: 'https://cdn-icons-png.flaticon.com/512/1154/1154955.png' },
     { id: 6, url: 'https://cdn-icons-png.flaticon.com/512/1154/1154480.png' },
 ];
+
+const { width, height } = Dimensions.get('window');
 
 selectedAvatar = '';
 
@@ -92,7 +95,8 @@ class Registration extends Component {
             borderWidth: 2,
             padding: 10,
             color: '#000000',
-            marginBottom: -30
+            fontSize:width*0.04,
+            marginBottom:-30
 
         };
 
@@ -104,6 +108,7 @@ class Registration extends Component {
                 <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                     <Image source={require('../assets/left.png')} style={styles.icon}></Image>
                 </TouchableOpacity>
+                <KeyboardAvoidingWrapper>
                 <View style={styles.login}>
                     <View style={{ flex: 1 }}>
                         <ProgressSteps {...progressStepsStyle}>
@@ -149,7 +154,7 @@ class Registration extends Component {
                             >
                                 <View style={{ alignItems: 'center' }}>
                                     <Text style={styles.textRegistration} dark bold>Registracija</Text>
-                                    <Image source={require('../assets/important.png')} style={{ marginBottom: 20, height: 200, width: 200 }}></Image>
+                                    <Image source={require('../assets/important.png')} style={{ marginBottom: 20, height: height * 0.25, width: width * 0.45, }}></Image>
                                     <UserInput name="UNESI KORISNIČKO IME:" value={this.state.username} setValue={this.setUsername} ></UserInput>
                                     <UserInput name="UNESI LOZINKU:" value={this.state.password} setValue={this.setPassword} secureTextEntry={true}></UserInput>
 
@@ -171,12 +176,13 @@ class Registration extends Component {
                                 <View style={{ alignItems: 'center' }}>
                                     <Text style={style = styles.congratsText}>Uspješno napravljen račun!</Text>
 
-                                    <Image source={require('../assets/emoji2.png')} style={{ width: 300, height: 300 }} ></Image>
+                                    <Image source={require('../assets/emoji2.png')} style={{   width: width * 0.8, height: height * 0.4,}} ></Image>
                                 </View>
                             </ProgressStep>
                         </ProgressSteps>
                     </View>
                 </View>
+                </KeyboardAvoidingWrapper>
             </View>
 
         );
@@ -193,19 +199,21 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 150,
-        borderTopLeftRadius: 70
+        marginTop: height * 0.2,
+        borderTopRightRadius: 0.15 * height,
+        paddingBottom:'100%'
+
     },
     textRegistration1: {
-        marginBottom: 10,
-        fontSize: 35,
+        marginTop: 0.01 * height,
+        fontSize: 0.06 * height,
         color: 'rgb(28,33,32)',
         marginBottom: 30
 
     },
     textRegistration: {
         marginBottom: 10,
-        fontSize: 35,
+        fontSize: 0.06 * height,
         color: 'rgb(28,33,32)'
 
     },
@@ -213,13 +221,13 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 10,
         left: 10,
-        width: 30,
-        height: 30,
+        width: width*0.1,
+        height: width*0.1,
         marginTop: 40,
         marginStart: 5
     },
     congratsText: {
-        fontSize: 40,
+        fontSize: 0.06 * height,
         textAlign: 'center',
         marginStart: 20,
         marginEnd: 20
@@ -233,7 +241,8 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#fff',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize:width*0.03
     },
     textImageContainer: {
         flexDirection: 'row'
