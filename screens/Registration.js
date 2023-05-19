@@ -5,6 +5,7 @@ import UserInput from "../components/UserInput";
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import AvatarPicker from "../components/AvatarPicker";
 import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
+import axios from 'axios';
 
 const avatars = [
     { id: 1, url: 'https://cdn-icons-png.flaticon.com/512/4333/4333609.png' },
@@ -34,7 +35,8 @@ class Registration extends Component {
             firstName: '',
             lastName: '',
             username: '',
-            password: ''
+            password: '',
+            error:false
         };
     }
    
@@ -49,6 +51,9 @@ class Registration extends Component {
     }
     setPassword = (text) => {
         this.setState({ password: text });
+    }
+    setError = (text) => {
+        this.setState({ error:text });
     }
 
     static navigationOptions = {
@@ -70,11 +75,24 @@ class Registration extends Component {
     onPrevStep = () => {
         console.log('called previous step');
     };
-
-    onSubmitSteps = () => {
-        console.log('called on submit step.');
-        console.log(this.state.firstName,this.state.lastName,selectedAvatar,this.state.username,this.state.password)
+    onHomePage = () => {
         this.props.navigation.navigate('HomePage');
+    };
+
+    onSubmitSteps = async () => {
+        console.log('called on submit step.');
+        try {
+            const response = await axios.post('http://10.0.2.2:3000/register', {
+              firstname:this.state.firstName,
+              lastname:this.state.lastName,
+              username:this.state.username,
+              password:this.state.password,
+            });
+            this.setError(false);
+          } catch (error) {
+            alert(error.response.data.error);
+            this.setError(true);
+        }
     };
 
     render() {
@@ -144,13 +162,14 @@ class Registration extends Component {
 
                             <ProgressStep
                                 label="Drugi korak"
-                                onNext={this.onNextStep}
                                 onPrevious={this.onPrevStep}
+                                onNext={this.onSubmitSteps}
                                 scrollViewProps={this.defaultScrollViewProps}
                                 nextBtnTextStyle={buttonTextStyle}
-                                nextBtnText="Nastavi"
+                                nextBtnText="Registruj se"
                                 previousBtnTextStyle={buttonTextStyle}
                                 previousBtnText="Vrati se"
+                                errors={this.state.error}
                             >
                                 <View style={{ alignItems: 'center' }}>
                                     <Text style={styles.textRegistration} dark bold>Registracija</Text>
@@ -166,7 +185,7 @@ class Registration extends Component {
                             <ProgressStep
                                 label="Kraj"
                                 onPrevious={this.onPrevStep}
-                                onSubmit={this.onSubmitSteps}
+                                onSubmit={this.onHomePage}
                                 scrollViewProps={this.defaultScrollViewProps}
                                 nextBtnTextStyle={buttonTextStyle}
                                 finishBtnText="Nastavi"

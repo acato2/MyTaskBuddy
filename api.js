@@ -39,13 +39,38 @@ app.post('/login', async (req, res) => {
     }
   });
 
-app.get('/users', (req, res)=>{
-    client.query(`Select * from users`, (err, result)=>{
-        if(!err){
-            res.send(result.rows);
-        }
-    });
-    client.end;
+app.post('/register', async(req,res) => {
+  try{
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
+    const username = req.body.username;
+    const password = req.body.password;
+
+    //Check for empty fields
+    if(!firstname || !lastname || !username || !password) {
+      throw new Error('All fields are required');
+    }
+    // Check the format of firstname and lastname
+    const nameRegex = /^[A-Za-z]+$/;
+    if (!nameRegex.test(firstname) || !nameRegex.test(lastname)) {
+      throw new Error('Invalid format for firstname or lastname');
+    }
+    // Check if the username already exists
+    const userExists = await client.query('SELECT * FROM users WHERE username = $1', [username]);
+    if (userExists.rows.length > 0) {
+      throw new Error('Username already exists');
+    }
+
+    // Insert the parameters into the users table
+    await client.query(
+      'INSERT INTO users (firstname, lastname, username, password) VALUES ($1, $2, $3, $4)',
+      [firstname, lastname, username, password]
+    );
+    res.status(200).json({ message: 'Registration successful' });
+  }
+  catch(error){
+    res.status(400).json({ error: error.message });
+  }
 })
 
 
