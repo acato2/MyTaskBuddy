@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import ProgressBar from './ProgressBar';
 
-const TaskCard = ({ startTime, endTime, activity, progress, onPress }) => {
+const TaskCard = ({ startTime, endTime, activity, progress, location, onPress }) => {
   return (
     <View style={styles.card} >
       <TouchableOpacity onPress={onPress}>
@@ -12,7 +12,7 @@ const TaskCard = ({ startTime, endTime, activity, progress, onPress }) => {
         <Image source={require("../assets/clock.png")} style={styles.clock}></Image>
         <View style={styles.timeContainer}>
           <Text style={styles.time}>{startTime} - {endTime}</Text>
-          <Text style={styles.locationText}>Kuća</Text>
+          <Text style={styles.locationText}>{location}</Text>
           <Image source={require("../assets/placeholder.png")} style={styles.locationIcon}></Image>
         </View>
       </View>

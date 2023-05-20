@@ -5,6 +5,8 @@ import UserInput from "../components/UserInput";
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -26,6 +28,11 @@ const Login = ({ navigation }) => {
       if (response.status === 200) {
         // Logged in successfully
         setMessage('');
+        // Extract the user ID from the response
+        const userId = response.data.userId;
+
+        // Store the user ID locally
+        await AsyncStorage.setItem('userId', userId);
         navigation.navigate('HomePage');
       }
     } catch (error) {

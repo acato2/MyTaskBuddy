@@ -29,7 +29,14 @@ app.post('/login', async (req, res) => {
       const { rows } = await client.query(query, values);
   
       if (rows.length === 1) {
-        res.status(200).json({ message: 'Logged in successfully!' });
+        const query2 = `
+         SELECT id FROM users
+          WHERE username = $1 AND password = $2;
+        `;
+
+         const result = await client.query(query2, values);
+         const userId = result.rows[0].id;
+        res.status(200).json({ message: 'Logged in successfully!', userId:userId});
       } else {
         res.status(401).json({ message: 'Invalid username or password' });
       }
@@ -72,6 +79,25 @@ app.post('/register', async(req,res) => {
     res.status(400).json({ error: error.message });
   }
 })
+
+app.get('/tasks', async (req, res) => {
+  try {
+    const { userId,status } = req.query;
+
+    // Fetch tasks based on the provided userId from the tasks table
+    const query = 'SELECT * FROM tasks WHERE "userId" = $1 and status = $2';
+    const values = [userId,status];
+    const result = await client.query(query, values);
+
+    // Get the rows from the result
+    const tasks = result.rows;
+
+    res.json(tasks);
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 
 app.listen(3000, ()=>{

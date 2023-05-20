@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const FilterStatus = () => {
+const FilterStatus = ({ setFilterStatus }) => {
   const [inprogress, setInProgress] = useState(false);
-  const [allTasks, setAllTasks] = useState(false);
-  const [completed, setCompleted] = useState(true);
+  const [allTasks, setAllTasks] = useState(true);
+  const [completed, setCompleted] = useState(false);
 
   const handleClick = (status) => {
     setInProgress(false);
@@ -14,12 +14,15 @@ const FilterStatus = () => {
     switch (status) {
       case 'inprogress':
         setInProgress(true);
+        setFilterStatus(1); // Set filter status to 1 (In progress)
         break;
       case 'allTasks':
         setAllTasks(true);
+        setFilterStatus(0); // Set filter status to null (ToDo tasks)
         break;
       case 'completed':
         setCompleted(true);
+        setFilterStatus(2); // Set filter status to 2 (Done)
         break;
       default:
         break;
