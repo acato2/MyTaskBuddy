@@ -4,9 +4,10 @@ import Calendar from '../components/Calendar';
 import TaskCard from '../components/TaskCard';
 import FilterStatus from '../components/FilterStatus';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
 
 const HomePage = ({ navigation }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(moment());
   const [tasks, setTasks] = useState([]);
   const [filterStatus, setFilterStatus] = useState(0);
 
@@ -19,8 +20,11 @@ const HomePage = ({ navigation }) => {
       // Logged user ID
       const userId = await AsyncStorage.getItem('userId');
 
+      // Format the selected date in the desired format
+      const date = selectedDate.format('YYYY-MM-DD');
+
       // Make a request to your API to fetch tasks based on the user ID
-      const response = await fetch(`http://10.0.2.2:3000/tasks?userId=${userId}&status=${filterStatus}`);
+      const response = await fetch(`http://10.0.2.2:3000/tasks?userId=${userId}&status=${filterStatus}&date=${date}`);
       const data = await response.json();
 
       // Update the tasks state with the fetched data
@@ -36,7 +40,7 @@ const HomePage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Calendar onDateChange={handleDateChange} />
+      <Calendar onDateChange={handleDateChange} selectedDate={selectedDate}/>
       <FilterStatus setFilterStatus={setFilterStatus}/>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
       {tasks.map((task) => (

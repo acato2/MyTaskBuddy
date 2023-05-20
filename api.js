@@ -82,11 +82,11 @@ app.post('/register', async(req,res) => {
 
 app.get('/tasks', async (req, res) => {
   try {
-    const { userId,status } = req.query;
+    const { userId,status,date } = req.query;
 
     // Fetch tasks based on the provided userId from the tasks table
-    const query = 'SELECT * FROM tasks WHERE "userId" = $1 and status = $2';
-    const values = [userId,status];
+    const query = 'SELECT * FROM tasks WHERE "userId" = $1 and status = $2 and date = $3';
+    const values = [userId,status,date];
     const result = await client.query(query, values);
 
     // Get the rows from the result

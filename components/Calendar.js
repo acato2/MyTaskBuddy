@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/bs';
 import { Ionicons } from '@expo/vector-icons';
 
-const Calendar = () => {
-  const [selectedDate, setSelectedDate] = useState(moment());
-
+const Calendar = ({ selectedDate, onDateChange }) => {
   const handlePrevDay = () => {
-    setSelectedDate(prevDate => moment(prevDate).subtract(1, 'days'));
+    const prevDate = moment(selectedDate).subtract(1, 'days');
+    onDateChange(prevDate);
   };
 
   const handleNextDay = () => {
-    setSelectedDate(prevDate => moment(prevDate).add(1, 'days'));
+    const nextDate = moment(selectedDate).add(1, 'days');
+    onDateChange(nextDate);
   };
 
   const isToday = moment().isSame(selectedDate, 'day');
