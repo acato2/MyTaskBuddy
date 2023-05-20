@@ -6,6 +6,7 @@ import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import AvatarPicker from "../components/AvatarPicker";
 import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const avatars = [
     { id: 1, url: 'https://cdn-icons-png.flaticon.com/512/4333/4333609.png' },
@@ -88,7 +89,13 @@ class Registration extends Component {
               username:this.state.username,
               password:this.state.password,
             });
-            this.setError(false);
+            if (response.status === 200) {
+                // Extract the user ID from the response
+                const userId = response.data.userId;
+                // Store the user ID locally
+                await AsyncStorage.setItem('userId', userId);
+                this.setError(false);
+            }
           } catch (error) {
             alert(error.response.data.error);
             this.setError(true);

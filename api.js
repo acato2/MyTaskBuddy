@@ -73,7 +73,14 @@ app.post('/register', async(req,res) => {
       'INSERT INTO users (firstname, lastname, username, password) VALUES ($1, $2, $3, $4)',
       [firstname, lastname, username, password]
     );
-    res.status(200).json({ message: 'Registration successful' });
+    const query2 = `
+    SELECT id FROM users
+     WHERE username = $1 AND password = $2;
+   `;
+    const values = [username, password];
+    const result = await client.query(query2, values);
+    const userId = result.rows[0].id;
+    res.status(200).json({ message: 'Registration successful', userId:userId} );
   }
   catch(error){
     res.status(400).json({ error: error.message });
