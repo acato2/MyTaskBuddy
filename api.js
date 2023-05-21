@@ -127,6 +127,38 @@ app.get('/userdetails', async (req, res) => {
   }
 });
 
+// PUT request to update the user's profile
+app.put('/users/:userId/profile', async (req, res) => {
+  const { userId } = req.params;
+  const { username, password } = req.body;
+
+  try {
+    // Get the existing user data from the database
+    const existingUser = await client.query('SELECT * FROM users WHERE id = $1', [userId]);
+
+    if (existingUser.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const user = existingUser.rows[0];
+
+    // Check if the new username or password is different from the existing ones
+    if (username !== user.username || password !== user.password) {
+      // Perform the update operation
+      await client.query('UPDATE users SET username = $1, password = $2 WHERE id = $3', [username, password, userId]);
+
+      // Return a success response
+      return res.status(200).json({ message: 'Profile updated successfully' });
+    }
+
+    // If the new username and password are the same as the existing ones
+    // Return a response indicating that no changes were made
+    return res.status(200).json({ message: 'No changes made to the profile' });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 
 app.listen(3000, ()=>{

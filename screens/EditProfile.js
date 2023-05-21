@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Login from './Login';
+import axios from 'axios';
 import {
     View,
     Text,
@@ -46,9 +47,22 @@ const EditProfile = ({navigation}) => {
   }, []);
 
     
-    const handleChanges = () => {
+    const handleChanges = async() => {
         // handle changing data logic
-    };
+        try {
+            // Logged user ID
+            const userId = await AsyncStorage.getItem('userId');
+            const response = await axios.put(`http://10.0.2.2:3000/users/${userId}/profile`, {
+                username: username,
+                password: password
+              });
+            console.log(response.data.message);
+            alert('Profile updated successfully');
+        }catch (error) {
+            console.error('Error editing profile:', error);
+
+        }
+    }
 
     const handleSwitch = () => {
         // handle account switch logic
@@ -96,7 +110,7 @@ const EditProfile = ({navigation}) => {
                     <TouchableOpacity style={styles.button} onPress={handleChanges}>
                         <Text style={styles.buttonText}>Sačuvaj promjene</Text>
                     </TouchableOpacity>
-                </View>
+               
                 <View
                         style={{
                             borderBottomColor: 'dimgray',
@@ -110,6 +124,8 @@ const EditProfile = ({navigation}) => {
                 <TouchableOpacity style={styles.switchProfile} onPress={handleSwitch}>
                     <Text style={styles.switchProfileText}>Prijavi se s drugog računa</Text>
                 </TouchableOpacity>
+                
+                </View>
                 </View>
             </View>
      
@@ -156,6 +172,13 @@ const styles = StyleSheet.create({
     inputContainer: {
         width: '100%',
         padding: 20,
+        backgroundColor:'#f2f2f2',
+        borderTopRightRadius:100,
+        height:'65%',
+        borderColor:'#d9d9d9',
+        borderTopLeftRadius:100,
+        borderWidth:1,
+
 
     },
     label: {
@@ -164,6 +187,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         color: 'black',
         fontSize: 18,
+        marginLeft:32
     },
     input: {
         borderWidth: 1,
@@ -174,7 +198,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#696969',
         width: '80%',
-        backgroundColor:'white'
+        backgroundColor:'white',
+        marginLeft:32
     },
     usernameContainer: {
         flexDirection: 'column',
@@ -194,7 +219,8 @@ const styles = StyleSheet.create({
         padding: 12,
         alignSelf: 'center',
         borderWidth:1,
-        borderColor:'darkgray'
+        borderColor:'darkgray',
+        marginBottom:20
     },
     buttonText: {
         color: '#333',
