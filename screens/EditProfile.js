@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Login from './Login';
 import {
@@ -9,10 +9,41 @@ import {
     TextInput,
     TouchableOpacity,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const EditProfile = ({navigation}) => {
-    const [username, setUsername] = useState('harrymartins');
-    const [password, setPassword] = useState('password');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [avatar, setAvatar] = useState('');
+
+    // Fetch user details
+  const fetchUserDetails = async () => {
+    try {
+      // Logged user ID
+      const userId = await AsyncStorage.getItem('userId');
+
+      // Make a request to your API to fetch details based on the user ID
+      const response = await fetch(`http://10.0.2.2:3000/userdetails?userId=${userId}`);
+      const data = await response.json();
+
+      console.log(data)
+      // Update fields with the fetched data
+      setAvatar(data.avatar);
+      setUsername(data.username);
+      setPassword(data.password);
+      setFirstName(data.firstname);
+      setLastName(data.lastname);
+
+    } catch (error) {
+      console.error('Error fetching details:', error);
+    }
+  };
+  useEffect(() => {
+    // Fetch details when the component mounts or when the selected date changes
+    fetchUserDetails();
+  }, []);
 
     
     const handleChanges = () => {
@@ -30,14 +61,13 @@ const EditProfile = ({navigation}) => {
             <Text style={styles.headingEdit}>Uredi profil</Text>
             </View>
             <View style={styles.userData}>
-            <Image
-                source={{
-                    uri:
-                        'https://cdn-icons-png.flaticon.com/512/4333/4333609.png',
-                }}
-                style={styles.image}
-            />
-            <Text style={styles.name}>Harry Martins</Text>
+            {avatar ? (
+          <Image
+            source={{ uri: avatar }}
+            style={styles.image}
+          />
+        ) : null}
+            <Text style={styles.name}>{`${firstName} ${lastName}`}</Text>
           
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>
@@ -117,8 +147,8 @@ const styles = StyleSheet.create({
 
     },
     image: {
-        width: 120,
-        height: 120,
+        width: 140,
+        height: 140,
         borderRadius: 50,
         marginBottom: 20,
         alignSelf:'center'
@@ -183,7 +213,7 @@ const styles = StyleSheet.create({
         alignSelf:'center'
     },
     name: {
-        fontSize: 25,
+        fontSize: 28,
         fontWeight: 'bold',
         alignSelf: 'center',
         marginBottom: 20,

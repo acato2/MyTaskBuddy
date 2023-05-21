@@ -108,6 +108,26 @@ app.get('/tasks', async (req, res) => {
   }
 });
 
+app.get('/userdetails', async (req, res) => {
+  try {
+    const { userId } = req.query;
+
+    // Fetch user details based on the provided id
+    const query = 'SELECT * FROM users WHERE id = $1 ';
+    const values = [userId];
+    const result = await client.query(query, values);
+
+    // Get the row from the result
+    const details = result.rows[0];
+
+    res.json(details);
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 
 app.listen(3000, ()=>{
     console.log("Sever is now listening at port 3000");
