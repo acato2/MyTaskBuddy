@@ -19,7 +19,7 @@ const avatars = [
 
 const { width, height } = Dimensions.get('window');
 
-selectedAvatar = '';
+selectedAvatar = avatars[0];
 
 const handleSelectAvatar = (avatar) => {
     console.log('Selected avatar:', avatar);
@@ -88,6 +88,7 @@ class Registration extends Component {
               lastname:this.state.lastName,
               username:this.state.username,
               password:this.state.password,
+              avatar:selectedAvatar.url
             });
             if (response.status === 200) {
                 // Extract the user ID from the response

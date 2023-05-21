@@ -52,6 +52,8 @@ app.post('/register', async(req,res) => {
     const lastname = req.body.lastname;
     const username = req.body.username;
     const password = req.body.password;
+    const avatar = req.body.avatar;
+
 
     //Check for empty fields
     if(!firstname || !lastname || !username || !password) {
@@ -70,8 +72,8 @@ app.post('/register', async(req,res) => {
 
     // Insert the parameters into the users table
     await client.query(
-      'INSERT INTO users (firstname, lastname, username, password) VALUES ($1, $2, $3, $4)',
-      [firstname, lastname, username, password]
+      'INSERT INTO users (firstname, lastname, username, password, avatar) VALUES ($1, $2, $3, $4, $5)',
+      [firstname, lastname, username, password, avatar]
     );
     const query2 = `
     SELECT id FROM users
