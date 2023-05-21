@@ -11,6 +11,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 const EditProfile = ({navigation}) => {
     const [firstName, setFirstName] = useState('');
@@ -70,6 +71,7 @@ const EditProfile = ({navigation}) => {
     };
 
     return (
+        <KeyboardAvoidingWrapper>
         <View style={styles.main}>
         <View style={styles.container}>
             <Text style={styles.headingEdit}>Uredi profil</Text>
@@ -128,6 +130,7 @@ const EditProfile = ({navigation}) => {
                 </View>
                 </View>
             </View>
+            </KeyboardAvoidingWrapper>
      
     );
 };
