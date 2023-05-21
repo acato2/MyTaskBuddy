@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 
 const EditProfile = ({navigation}) => {
-    const [email, setEmail] = useState('harrymartins@gmail.com');
     const [username, setUsername] = useState('harrymartins');
     const [password, setPassword] = useState('password');
 
@@ -26,7 +25,11 @@ const EditProfile = ({navigation}) => {
     };
 
     return (
+        <View style={styles.main}>
         <View style={styles.container}>
+            <Text style={styles.headingEdit}>Uredi profil</Text>
+            </View>
+            <View style={styles.userData}>
             <Image
                 source={{
                     uri:
@@ -35,16 +38,8 @@ const EditProfile = ({navigation}) => {
                 style={styles.image}
             />
             <Text style={styles.name}>Harry Martins</Text>
-            <View style={styles.whiteContainter}>
+          
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>
-                        <Icon name="envelope" size={20} color="#00004d" />  Nova email adresa
-                    </Text>
-                    <TextInput
-                        style={styles.input}
-                        value={email}
-                        onChangeText={(text) => setEmail(text)}
-                    />
                     <Text style={styles.label}>
                         <Icon name="user" size={22} color="#2CB237" />  Novo korisničko ime
                     </Text>
@@ -76,7 +71,8 @@ const EditProfile = ({navigation}) => {
                         style={{
                             borderBottomColor: 'dimgray',
                             borderBottomWidth: 1,
-                            width:'60%'
+                            width:'60%',
+                            alignSelf:'center'
                         }} >
                             
                             
@@ -84,18 +80,37 @@ const EditProfile = ({navigation}) => {
                 <TouchableOpacity style={styles.switchProfile} onPress={handleSwitch}>
                     <Text style={styles.switchProfileText}>Prijavi se s drugog računa</Text>
                 </TouchableOpacity>
+                </View>
             </View>
-        </View>
+     
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#00004d',
-        alignItems: 'center',
-        paddingTop: 80,
-        justifyContent: 'center'
+        flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: '#cceeff',
+    borderBottomLeftRadius:10,
+    borderBottomRightRadius:10,
+    borderColor:'darkgray',
+    borderBottomWidth:2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    paddingTop: 50,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
     },
     heading: {
         fontSize: 25
@@ -106,6 +121,7 @@ const styles = StyleSheet.create({
         height: 120,
         borderRadius: 50,
         marginBottom: 20,
+        alignSelf:'center'
     },
     inputContainer: {
         width: '100%',
@@ -127,7 +143,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontSize: 16,
         color: '#696969',
-        width: '80%'
+        width: '80%',
+        backgroundColor:'white'
     },
     usernameContainer: {
         flexDirection: 'column',
@@ -142,15 +159,17 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     button: {
-        backgroundColor: '#2CB237',
+        backgroundColor: '#cceeff',
         borderRadius: 20,
         padding: 12,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        borderWidth:1,
+        borderColor:'darkgray'
     },
     buttonText: {
-        color: 'white',
+        color: '#333',
         fontWeight: 'bold',
-        fontSize:16
+        fontSize:18
     },
     switchProfile: {
         //padding: 10,
@@ -158,16 +177,17 @@ const styles = StyleSheet.create({
     },
     switchProfileText: {
         color: '#00004d',
-        fontSize:15,
+        fontSize:18,
         marginTop:5,
-        textDecorationLine: 'underline'
+        textDecorationLine: 'underline',
+        alignSelf:'center'
     },
     name: {
         fontSize: 25,
         fontWeight: 'bold',
         alignSelf: 'center',
         marginBottom: 20,
-        color: 'white',
+        color: 'black',
 
 
     },
@@ -185,6 +205,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+    userData:{
+        marginTop:150,
+    },
+    headingEdit:{
+        fontSize: 23,
+        fontWeight: 'bold',
+        color: '#333',
+        textAlign: 'center',
+        flex: 1,
+        marginHorizontal: 10,
+    },
+    main:{
+        backgroundColor:'white',
+        height:'100%'
+    }
+  
 
 });
 

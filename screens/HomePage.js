@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 110,
     paddingHorizontal: 20,
-    paddingBottom:10
+    paddingBottom:10,
+    backgroundColor:'white'
   },
   calendar: {
     flex: 1,
