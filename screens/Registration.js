@@ -125,13 +125,16 @@ class Registration extends Component {
             marginBottom:-30
 
         };
+        const handleBackButtonPress = () => {
+            this.props.navigation.goBack();
+          };
 
 
 
         return (
 
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                <TouchableOpacity onPress={handleBackButtonPress} style={styles.backButton}>
                     <Image source={require('../assets/left.png')} style={styles.icon}></Image>
                 </TouchableOpacity>
                 <KeyboardAvoidingWrapper>
@@ -273,7 +276,13 @@ const styles = StyleSheet.create({
     },
     textImageContainer: {
         flexDirection: 'row'
-    }
+    },
+    backButton: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        zIndex: 1
+      }
 });
 
 export default Registration;
