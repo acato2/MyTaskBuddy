@@ -9,9 +9,12 @@ import {
     Image,
     TextInput,
     TouchableOpacity,
+    Dimensions
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+
+const { width, height } = Dimensions.get('window');
 
 const EditProfile = ({navigation}) => {
     const [firstName, setFirstName] = useState('');
@@ -87,7 +90,7 @@ const EditProfile = ({navigation}) => {
           
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>
-                        <Icon name="user" size={22} color="#2CB237" />  Novo korisničko ime
+                        <Icon name="user" size={width*0.045} color="#2CB237" />  Novo korisničko ime
                     </Text>
                     <TextInput
                         style={styles.input}
@@ -95,7 +98,7 @@ const EditProfile = ({navigation}) => {
                         onChangeText={(text) => setUsername(text)}
                     />
                     <Text style={styles.label}>
-                        <Icon name="lock" size={22} color="blue" />  Nova lozinka
+                        <Icon name="lock" size={width*0.045} color="blue" />  Nova lozinka
                     </Text>
                     <View style={styles.passwordContainer}>
                         <View style={styles.wrapper}>
@@ -166,8 +169,8 @@ const styles = StyleSheet.create({
 
     },
     image: {
-        width: 140,
-        height: 140,
+        width: width*0.3,
+        height: width*0.3,
         borderRadius: 50,
         marginBottom: 20,
         alignSelf:'center'
@@ -189,7 +192,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 5,
         color: 'black',
-        fontSize: 18,
+        fontSize: width*0.04,
         marginLeft:32
     },
     input: {
@@ -198,11 +201,12 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         marginBottom: 10,
-        fontSize: 16,
+        fontSize: width*0.035,
         color: '#696969',
         width: '80%',
         backgroundColor:'white',
-        marginLeft:32
+        marginLeft:32,
+        paddingLeft:20
     },
     usernameContainer: {
         flexDirection: 'column',
@@ -228,7 +232,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#333',
         fontWeight: 'bold',
-        fontSize:18
+        fontSize:width*0.04
     },
     switchProfile: {
         //padding: 10,
@@ -236,13 +240,13 @@ const styles = StyleSheet.create({
     },
     switchProfileText: {
         color: '#00004d',
-        fontSize:18,
+        fontSize:width*0.04,
         marginTop:5,
         textDecorationLine: 'underline',
         alignSelf:'center'
     },
     name: {
-        fontSize: 28,
+        fontSize: width*0.065,
         fontWeight: 'bold',
         alignSelf: 'center',
         marginBottom: 20,
@@ -265,10 +269,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     userData:{
-        marginTop:150,
+        marginTop:height*0.16,
     },
     headingEdit:{
-        fontSize: 23,
+        fontSize: width*0.045,
         fontWeight: 'bold',
         color: '#333',
         textAlign: 'center',
