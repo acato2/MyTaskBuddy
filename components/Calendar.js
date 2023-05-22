@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/bs';
 import { Ionicons } from '@expo/vector-icons';
+
+const { width, height } = Dimensions.get('window');
 
 const Calendar = ({ selectedDate, onDateChange }) => {
   const handlePrevDay = () => {
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   date: {
-    fontSize: 23,
+    fontSize: width*0.045,
     fontWeight: 'bold',
     color: '#333',
     textAlign: 'center',
@@ -65,7 +67,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   icon: {
-    fontSize: 26,
+    fontSize: width*0.055,
     color: '#333',
   },
 });

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 const ProgressBar = ({ progress }) => {
   const [percent, setPercent] = useState(0);
@@ -10,7 +12,7 @@ const ProgressBar = ({ progress }) => {
       height: 15,
       borderRadius: 10,
       backgroundColor: '#ccc',
-      marginVertical: 10,
+      marginVertical: width*0.03,
       alignSelf: 'center',
     },
     bar: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native';
 import ProgressBar from './ProgressBar';
 
 const TaskCard = ({ startTime, endTime, activity, progress, location, onPress }) => {
@@ -24,6 +24,9 @@ const TaskCard = ({ startTime, endTime, activity, progress, location, onPress })
   );
 };
 
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
@@ -38,8 +41,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    width: 350,
-    height: 140,
+    width: deviceWidth *0.83, // Adjust width based on the device screen width
+    height: deviceHeight *0.18,
     borderColor: '#C8C8C8',
     borderWidth: 1
   },
@@ -51,11 +54,11 @@ const styles = StyleSheet.create({
   },
   time: {
     flex:1,
-    fontSize: 16,
+    fontSize: deviceWidth*0.035,
     marginRight:10
   },
   activity: {
-    fontSize: 21,
+    fontSize: deviceWidth*0.05,
     fontWeight: 'bold',
     marginBottom:15
   },
@@ -64,27 +67,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   clock: {
-    width: 30,
-    height: 30,
+    width: deviceWidth*0.06,
+    height: deviceWidth*0.06,
     marginRight: 10,
   },
   newImage: {
-    width: 30,
-    height: 30,
+    width: deviceWidth*0.06,
+    height: deviceWidth*0.06,
     position: 'absolute',
     top: 0,
     right: 0,
   },
   locationText: {
-    fontSize: 16,
+    fontSize: deviceWidth*0.035,
     paddingRight:10
-    //marginLeft: 10,
 
   },
   locationIcon:{
-    width: 30,
-    height: 30,
-    //marginRight: 10,
+    width: deviceWidth*0.06,
+    height: deviceWidth*0.06,
   }
 });
 

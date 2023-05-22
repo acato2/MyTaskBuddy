@@ -1,10 +1,12 @@
-import React, { useState,useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
 import Calendar from '../components/Calendar';
 import TaskCard from '../components/TaskCard';
 import FilterStatus from '../components/FilterStatus';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
+
+const { width, height } = Dimensions.get('window');
 
 const HomePage = ({ navigation }) => {
   const [selectedDate, setSelectedDate] = useState(moment());
@@ -69,21 +71,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingTop: 110,
-    paddingHorizontal: 20,
-    paddingBottom:10,
-    backgroundColor:'white'
-  },
-  calendar: {
-    flex: 1,
-    marginBottom: 10,
+    paddingTop: height * 0.1,
+    paddingHorizontal: width * 0.05,
+    paddingBottom: 10,
+    backgroundColor: 'white',
   },
   scrollViewContent: {
     flexGrow: 1,
     alignItems: 'center',
-    marginTop:20
-
-  },
+    marginTop: height * 0.02,
+  }
 });
 
 export default HomePage;

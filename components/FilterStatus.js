@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet,Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 const FilterStatus = ({ setFilterStatus }) => {
   const [inprogress, setInProgress] = useState(false);
@@ -87,26 +89,25 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-   
-
+    paddingVertical: height * 0.01,
+    paddingHorizontal: width * 0.02,
+    marginTop:width*0.03
   },
   filterButton: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: height * 0.005,
+    paddingHorizontal: width * 0.01,
     borderRadius: 12,
-    marginHorizontal:5,
-    borderColor:'lightgray',
-    borderWidth:1,
-    width:110,
-    backgroundColor:'white',
-    
+    marginHorizontal: width * 0.02,
+    marginTop: width * 0.02,
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    width: width * 0.25,
+    backgroundColor: 'white',
   },
   filterButtonText: {
-    fontSize: 18,
-    textAlign:'center',
-    color:'gray'
+    fontSize: width*0.039,
+    textAlign: 'center',
+    color: 'gray',
   },
   activeFilterButton: {
     backgroundColor: '#66b3ff',
