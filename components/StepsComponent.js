@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 const StepsComponent = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -12,10 +13,10 @@ const StepsComponent = () => {
   const renderStepButton = (stepNumber) => {
     const isCurrentStep = currentStep === stepNumber;
     const isCompletedStep = currentStep > stepNumber;
-
+  
     let buttonText = '';
     let buttonStyle = {};
-
+  
     if (isCompletedStep) {
       buttonText = 'Complete';
       buttonStyle = styles.completeButton;
@@ -30,8 +31,15 @@ const StepsComponent = () => {
         buttonText = 'Continue';
         buttonStyle = styles.continueButton;
       }
+    } else {
+      // Step is inactive
+      return (
+        <View style={styles.inactiveStepIcon}>
+          <Icon name="lock" size={22} color="gray" />
+        </View>
+      );
     }
-
+  
     return (
       <TouchableOpacity
         style={[styles.stepButton, buttonStyle]}
@@ -42,6 +50,7 @@ const StepsComponent = () => {
       </TouchableOpacity>
     );
   };
+  
 
   const renderStepCard = (stepNumber, stepName, stepDescription) => {
     const isCurrentStep = currentStep === stepNumber;
@@ -106,7 +115,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 15,
     borderWidth: 2,
-    borderColor: 'gray',
+    borderColor: '#d9d9d9',
     backgroundColor: 'white',
     paddingLeft: 40,
     height:100,
@@ -117,7 +126,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e6fff5',
   },
   currentStepCard: {
-    borderColor: '#1a75ff',
+    borderColor: '#66b3ff',
     backgroundColor: 'white',
   },
   stepNumber: {
@@ -133,10 +142,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   inactiveStepNumber: {
-    borderColor: 'gray',
+    borderColor: '#d9d9d9'
   },
   currentStepNumber: {
-    borderColor: '#1a75ff',
+    borderColor: '#66b3ff',
   },
   stepNumberText: {
     fontWeight: 'bold',
@@ -152,7 +161,7 @@ const styles = StyleSheet.create({
     fontSize:18
   },
   completedStepName: {
-    color: 'green',
+    color: '#00b377',
   },
   stepContent: {
     flex: 1,
@@ -160,6 +169,7 @@ const styles = StyleSheet.create({
   },
   stepDescription: {
     marginTop: 8,
+    color:'grey'
   },
   stepButton: {
     paddingHorizontal: 12,
@@ -170,20 +180,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   startButton: {
-    backgroundColor: 'blue',
-    borderColor: 'blue',
+    backgroundColor: '#66b3ff',
+    borderColor: '#66b3ff',
+    borderRadius:15
   },
   continueButton: {
-    backgroundColor: 'blue',
-    borderColor: 'blue',
+    backgroundColor: '#66b3ff',
+    borderColor: '#66b3ff',
+    borderRadius:15
   },
   finishButton: {
-    backgroundColor: 'blue',
-    borderColor: 'blue',
+    backgroundColor: '#333371',
+    borderColor: '#333371',
+    borderRadius:15
   },
   completeButton: {
-    backgroundColor: 'green',
-    borderColor: 'green',
+    backgroundColor: '#00b377',
+    borderColor: '#00b377',
+    borderRadius:15
   },
   stepButtonText: {
     color: 'white',
