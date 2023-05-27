@@ -8,7 +8,7 @@ const Task = ({ route, navigation }) => {
   const [firstName, setFirstName] = useState('');
   const [status, setStatus] = useState(0);
   const [isWhiteContainerVisible, setIsWhiteContainerVisible] = useState(false);
-  const slideInAnimation = useRef(new Animated.Value(0)).current;
+  const slideUpAnimation = useRef(new Animated.Value(0)).current;
 
   const fetchFirstName = async () => {
     try {
@@ -59,14 +59,18 @@ const Task = ({ route, navigation }) => {
         body: JSON.stringify({ status: 1 }),
       });
 
-      // Set the whiteContainer visibility to true and animate the slide in
+      // Set the whiteContainer visibility to true
       setStatus(1);
       setIsWhiteContainerVisible(true);
-      Animated.timing(slideInAnimation, {
-        toValue: 1,
-        duration: 500, // Adjust the duration as needed
-        useNativeDriver: true,
-      }).start();
+
+      if (status === 0) {
+        // Animate the slide up for whiteContainer
+        Animated.timing(slideUpAnimation, {
+          toValue: 1,
+          duration: 500, // Adjust the duration as needed
+          useNativeDriver: true,
+        }).start();
+      }
     } catch (error) {
       console.error('Error updating task status:', error);
     }
@@ -76,6 +80,16 @@ const Task = ({ route, navigation }) => {
     fetchFirstName();
     fetchTaskStatus();
   }, []);
+
+  useEffect(() => {
+    if (isWhiteContainerVisible) {
+      Animated.timing(slideUpAnimation, {
+        toValue: 1,
+        duration: 500, // Adjust the duration as needed
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [isWhiteContainerVisible]);
 
   return (
     <View style={styles.container}>
@@ -91,12 +105,19 @@ const Task = ({ route, navigation }) => {
         <Text style={styles.activityName}>{activityName}</Text>
         <View style={styles.line} />
       </View>
-      {status === 1 ? (
-        <ScrollView style={styles.whiteContainer}>
-          <StepsComponent taskId={taskId} />
-        </ScrollView>
+      {isWhiteContainerVisible ? (
+        <Animated.View
+          style={[styles.whiteContainer, { transform: [{ translateY: slideUpAnimation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [500, 0],
+          }) }] }]}
+        >
+          <ScrollView>
+            <StepsComponent taskId={taskId} />
+          </ScrollView>
+        </Animated.View>
       ) : (
-        <TouchableOpacity style={styles.startButton} onPress={startTask}>
+        <TouchableOpacity style={styles.startButton} onPress={startTask} disabled={status !== 0}>
           <Text style={styles.startButtonText}>Start Task</Text>
         </TouchableOpacity>
       )}
@@ -138,7 +159,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#e6f2ff',
     borderTopLeftRadius: 70,
-    borderTopRightRadius: 70
+    borderTopRightRadius: 70,
   },
   lets: {
     fontSize: 20,
