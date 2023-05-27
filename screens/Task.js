@@ -34,6 +34,9 @@ const Task = ({ route, navigation }) => {
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Image source={require('../assets/left.png')} style={styles.icon} />
       </TouchableOpacity>
+      <TouchableOpacity style={styles.menuIconContainer}>
+      <Image source={require('../assets/detail.png')} style={styles.menuIcon} />
+    </TouchableOpacity>
       <View style={styles.blueContainer}>
         <Image source={require('../assets/planning2.png')} style={styles.topicon} />
         <Text style={styles.lets}>Hi {firstName}, let's</Text>
@@ -66,6 +69,17 @@ const styles = StyleSheet.create({
     height: 40,
     marginTop: 40,
     marginStart: 5,
+  },
+  menuIconContainer: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    marginTop: 40,
+    marginEnd: 5
+  },
+  menuIcon: {
+    width: 50,
+    height: 50,
   },
   whiteContainer: {
     flex: 1,
