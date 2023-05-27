@@ -2,21 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-const StepsComponent = ({ activityName }) => {
+const StepsComponent = ({ taskId }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [steps, setSteps] = useState([]);
 
   useEffect(() => {
-    const fetchTaskId = async () => {
-      try {
-        const response = await fetch(`http://10.0.2.2:3000/tasks/${activityName}`);
-        const data = await response.json();
-        const taskId = data.taskId;
-        fetchSubsteps(taskId);
-      } catch (error) {
-        console.error('Error fetching taskId:', error);
-      }
-    };
 
     const fetchSubsteps = async (taskId) => {
       try {
@@ -29,8 +19,8 @@ const StepsComponent = ({ activityName }) => {
       }
     };
 
-    fetchTaskId();
-  }, [activityName]);
+    fetchSubsteps(taskId);
+  }, [taskId]);
 
   const handleStepCompletion = () => {
     setCurrentStep(currentStep + 1);

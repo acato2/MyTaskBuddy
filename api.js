@@ -180,20 +180,6 @@ app.get('/users/:userId/firstname', async (req, res) => {
   }
 });
 
-// Fetch the taskId based on activityName
-app.get('/tasks/:activityName', async (req, res) => {
-  const { activityName } = req.params;
-  try {
-    const result = await client.query('SELECT id FROM tasks WHERE activity = $1', [
-      activityName,
-    ]);
-    const taskId = result.rows[0].id;
-    res.json({ taskId });
-  } catch (error) {
-    console.error('Error fetching taskId:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
 // Fetch the substeps based on taskId
 app.get('/substeps/:taskId', async (req, res) => {

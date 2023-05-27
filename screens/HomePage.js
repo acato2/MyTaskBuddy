@@ -55,6 +55,7 @@ const HomePage = ({ navigation }) => {
             location={task.location}
             onPress={() =>
               navigation.navigate('Task', {
+                taskId: task.id,
                 activityName: task.activity,
                 date: selectedDate.toString(),
               })

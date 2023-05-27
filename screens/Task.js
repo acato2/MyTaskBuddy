@@ -4,7 +4,7 @@ import StepsComponent from '../components/StepsComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Task = ({ route, navigation }) => {
-  const { activityName, date } = route.params; // getting the activity name from the route params
+  const { taskId, activityName, date } = route.params; // getting the activity name from the route params
   const [firstName, setFirstName] = useState('');
   const fetchFirstName = async () => {
     try {
@@ -44,7 +44,7 @@ const Task = ({ route, navigation }) => {
         <View style={styles.line} />
       </View>
       <ScrollView style={styles.whiteContainer}>
-        <StepsComponent activityName={activityName}/>
+        <StepsComponent taskId={taskId}/>
       </ScrollView>
     </View>
   );
