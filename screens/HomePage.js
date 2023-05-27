@@ -38,7 +38,7 @@ const HomePage = ({ navigation }) => {
   useEffect(() => {
     // Fetch tasks when the component mounts or when the selected date changes
     fetchTasks();
-  }, [selectedDate, filterStatus]);
+  }, [selectedDate, filterStatus, tasks]);
 
   return (
     <View style={styles.container}>
