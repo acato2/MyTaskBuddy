@@ -1,10 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-const StepsComponent = () => {
+const StepsComponent = ({ activityName }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 5; // Replace with the total number of steps
+  const [steps, setSteps] = useState([]);
+
+  useEffect(() => {
+    const fetchTaskId = async () => {
+      try {
+        const response = await fetch(`http://10.0.2.2:3000/tasks/${activityName}`);
+        const data = await response.json();
+        const taskId = data.taskId;
+        fetchSubsteps(taskId);
+      } catch (error) {
+        console.error('Error fetching taskId:', error);
+      }
+    };
+
+    const fetchSubsteps = async (taskId) => {
+      try {
+        const response = await fetch(`http://10.0.2.2:3000/substeps/${taskId}`);
+        const data = await response.json();
+        const substeps = data.substeps;
+        setSteps(substeps);
+      } catch (error) {
+        console.error('Error fetching substeps:', error);
+      }
+    };
+
+    fetchTaskId();
+  }, [activityName]);
 
   const handleStepCompletion = () => {
     setCurrentStep(currentStep + 1);
@@ -13,10 +39,10 @@ const StepsComponent = () => {
   const renderStepButton = (stepNumber) => {
     const isCurrentStep = currentStep === stepNumber;
     const isCompletedStep = currentStep > stepNumber;
-  
+
     let buttonText = '';
     let buttonStyle = {};
-  
+
     if (isCompletedStep) {
       buttonText = 'Complete';
       buttonStyle = styles.completeButton;
@@ -24,7 +50,7 @@ const StepsComponent = () => {
       if (currentStep === 1) {
         buttonText = 'Start';
         buttonStyle = styles.startButton;
-      } else if (currentStep === totalSteps) {
+      } else if (currentStep === steps.length) {
         buttonText = 'Finish';
         buttonStyle = styles.finishButton;
       } else {
@@ -39,7 +65,7 @@ const StepsComponent = () => {
         </View>
       );
     }
-  
+
     return (
       <TouchableOpacity
         style={[styles.stepButton, buttonStyle]}
@@ -50,9 +76,8 @@ const StepsComponent = () => {
       </TouchableOpacity>
     );
   };
-  
 
-  const renderStepCard = (stepNumber, stepName, stepDescription) => {
+  const renderStepCard = (stepNumber, stepName, stepDescription, index) => {
     const isCurrentStep = currentStep === stepNumber;
     const isCompletedStep = currentStep > stepNumber;
 
@@ -74,7 +99,7 @@ const StepsComponent = () => {
     ];
 
     return (
-      <View style={stepCardStyle}>
+      <View key={index} style={stepCardStyle}>
         <View style={stepNumberStyle}>
           {isCompletedStep ? (
             <Text style={styles.checkmark}>✓</Text>
@@ -93,11 +118,9 @@ const StepsComponent = () => {
 
   return (
     <View style={styles.container}>
-      {renderStepCard(1, 'Step 1', 'Description of Step 1')}
-      {renderStepCard(2, 'Step 2', 'Description of Step 2')}
-      {renderStepCard(3, 'Step 3', 'Description of Step 3')}
-      {renderStepCard(4, 'Step 4', 'Description of Step 4')}
-      {renderStepCard(5, 'Step 5', 'Description of Step 5')}
+      {steps.map((step, index) =>
+        renderStepCard(index + 1, step.stepName, step.description, index)
+      )}
     </View>
   );
 };
@@ -118,8 +141,7 @@ const styles = StyleSheet.create({
     borderColor: '#d9d9d9',
     backgroundColor: 'white',
     paddingLeft: 40,
-    height:100,
-    marginHorizontal:20
+    marginHorizontal: 20,
   },
   completedStepCard: {
     borderColor: '#00b386',
@@ -142,7 +164,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   inactiveStepNumber: {
-    borderColor: '#d9d9d9'
+    borderColor: '#d9d9d9',
   },
   currentStepNumber: {
     borderColor: '#66b3ff',
@@ -158,7 +180,7 @@ const styles = StyleSheet.create({
   },
   stepName: {
     fontWeight: 'bold',
-    fontSize:18
+    fontSize: 18,
   },
   completedStepName: {
     color: '#00b377',
@@ -169,7 +191,7 @@ const styles = StyleSheet.create({
   },
   stepDescription: {
     marginTop: 8,
-    color:'grey'
+    color: 'grey',
   },
   stepButton: {
     paddingHorizontal: 12,
@@ -182,22 +204,22 @@ const styles = StyleSheet.create({
   startButton: {
     backgroundColor: '#66b3ff',
     borderColor: '#66b3ff',
-    borderRadius:15
+    borderRadius: 15,
   },
   continueButton: {
     backgroundColor: '#66b3ff',
     borderColor: '#66b3ff',
-    borderRadius:15
+    borderRadius: 15,
   },
   finishButton: {
     backgroundColor: '#333371',
     borderColor: '#333371',
-    borderRadius:15
+    borderRadius: 15,
   },
   completeButton: {
     backgroundColor: '#00b377',
     borderColor: '#00b377',
-    borderRadius:15
+    borderRadius: 15,
   },
   stepButtonText: {
     color: 'white',

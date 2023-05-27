@@ -44,7 +44,7 @@ const Task = ({ route, navigation }) => {
         <View style={styles.line} />
       </View>
       <ScrollView style={styles.whiteContainer}>
-        <StepsComponent />
+        <StepsComponent activityName={activityName}/>
       </ScrollView>
     </View>
   );

@@ -180,6 +180,37 @@ app.get('/users/:userId/firstname', async (req, res) => {
   }
 });
 
+// Fetch the taskId based on activityName
+app.get('/tasks/:activityName', async (req, res) => {
+  const { activityName } = req.params;
+  try {
+    const result = await client.query('SELECT id FROM tasks WHERE activity = $1', [
+      activityName,
+    ]);
+    const taskId = result.rows[0].id;
+    res.json({ taskId });
+  } catch (error) {
+    console.error('Error fetching taskId:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Fetch the substeps based on taskId
+app.get('/substeps/:taskId', async (req, res) => {
+  const { taskId } = req.params;
+  try {
+    const result = await client.query(
+      'SELECT id, "stepName", description FROM substeps WHERE "taskId" = $1 ORDER BY id ASC',
+      [taskId]
+    );
+    const substeps = result.rows;
+    res.json({ substeps });
+  } catch (error) {
+    console.error('Error fetching substeps:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 app.listen(3000, ()=>{
     console.log("Sever is now listening at port 3000");
