@@ -197,6 +197,44 @@ app.get('/substeps/:taskId', async (req, res) => {
   }
 });
 
+app.put('/tasks/:taskId', async (req, res) => {
+  const { taskId } = req.params;
+  const { status } = req.body;
+
+  try {
+    // Update the status of the task in the tasks table
+    const query = 'UPDATE tasks SET status = $1 WHERE id = $2';
+    const values = [status, taskId];
+    await client.query(query, values);
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Error updating task status:', error);
+    res.sendStatus(500);
+  }
+});
+
+app.get('/tasks/:taskId/status', async (req, res) => {
+  const { taskId } = req.params;
+
+  try {
+    const query = 'SELECT status FROM tasks WHERE id = $1';
+    const values = [taskId];
+
+    const result = await client.query(query, values);
+    const task = result.rows[0];
+
+    if (!task) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+
+    res.json({ status: task.status });
+  } catch (error) {
+    console.error('Error fetching task status:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 app.listen(3000, ()=>{
     console.log("Sever is now listening at port 3000");
