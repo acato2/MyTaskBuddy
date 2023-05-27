@@ -160,6 +160,26 @@ app.put('/users/:userId/profile', async (req, res) => {
   }
 });
 
+// GET route to fetch user's first name based on user ID
+app.get('/users/:userId/firstname', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const query = 'SELECT firstname FROM users WHERE id = $1';
+    const values = [userId];
+
+    const result = await client.query(query, values);
+    const user = result.rows[0];
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({ firstName: user.firstname });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 app.listen(3000, ()=>{
     console.log("Sever is now listening at port 3000");
