@@ -1,10 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 const StepsComponent = ({ taskId }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [steps, setSteps] = useState([]);
+
+  const updateStepStatus = useCallback(async (stepId) => {
+    try {
+      const response = await fetch('http://10.0.2.2:3000/update-step', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ stepId, status: 1 }),
+      });
+      // Handle the response as needed
+    } catch (error) {
+      console.error('Error updating step status:', error);
+    }
+  }, []);
 
   useEffect(() => {
 
@@ -22,8 +37,12 @@ const StepsComponent = ({ taskId }) => {
     fetchSubsteps(taskId);
   }, [taskId]);
 
-  const handleStepCompletion = () => {
+  const handleStepCompletion = async() => {
+    const currentStepId = steps[currentStep - 1]?.id;
+    if (currentStepId) {
+    await updateStepStatus(currentStepId);
     setCurrentStep(currentStep + 1);
+  }
   };
 
   const renderStepButton = (stepNumber) => {
@@ -38,7 +57,7 @@ const StepsComponent = ({ taskId }) => {
       buttonStyle = styles.completeButton;
     } else if (isCurrentStep) {
       if (currentStep === 1) {
-        buttonText = 'Start';
+        buttonText = 'Continue';
         buttonStyle = styles.startButton;
       } else if (currentStep === steps.length) {
         buttonText = 'Finish';

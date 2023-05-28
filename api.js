@@ -235,6 +235,23 @@ app.get('/tasks/:taskId/status', async (req, res) => {
   }
 });
 
+// Update step status endpoint
+app.post('/update-step', async (req, res) => {
+  const { stepId, status } = req.body;
+
+  try {
+    const query = 'UPDATE substeps SET status = $1 WHERE id = $2';
+    const values = [status, stepId];
+    await client.query(query, values);
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Error updating step status:', error);
+    res.sendStatus(500);
+  }
+});
+
+
 
 app.listen(3000, ()=>{
     console.log("Sever is now listening at port 3000");
