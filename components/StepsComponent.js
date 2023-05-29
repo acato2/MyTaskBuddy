@@ -6,6 +6,20 @@ const StepsComponent = ({ taskId }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [steps, setSteps] = useState([]);
 
+  const updateTaskStatus = async (taskId, status) => {
+    try {
+      await fetch(`http://10.0.2.2:3000/tasks/${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
+      });
+    } catch (error) {
+      console.error('Error updating task status:', error);
+    }
+  };
+
   const updateStepStatus = useCallback(async (stepId) => {
     try {
       const response = await fetch('http://10.0.2.2:3000/update-step', {
@@ -24,6 +38,12 @@ const StepsComponent = ({ taskId }) => {
           return step;
         });
         setSteps(updatedSteps);
+        // Check if all steps are completed
+        const allStepsCompleted = updatedSteps.every((step) => step.status === 1);
+        if (allStepsCompleted) {
+          // Update the task status to 2
+          await updateTaskStatus(taskId, 2);
+        }
       }
     } catch (error) {
       console.error('Error updating step status:', error);
