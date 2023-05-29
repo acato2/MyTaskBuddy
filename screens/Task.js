@@ -38,7 +38,7 @@ const Task = ({ route, navigation }) => {
       if (response.ok) {
         const taskStatus = data.status;
         setStatus(taskStatus);
-        setIsWhiteContainerVisible(taskStatus === 1);
+        setIsWhiteContainerVisible(taskStatus === 1 || taskStatus === 2); // Update the visibility condition
       } else {
         console.error('Error fetching task status:', data.error);
       }
