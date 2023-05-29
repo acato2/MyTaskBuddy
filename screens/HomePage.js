@@ -28,9 +28,15 @@ const HomePage = ({ navigation }) => {
       // Make a request to your API to fetch tasks based on the user ID
       const response = await fetch(`http://10.0.2.2:3000/tasks?userId=${userId}&status=${filterStatus}&date=${date}`);
       const data = await response.json();
+      // Sort the tasks by startTime in ascending order
+      const sortedTasks = data.sort((a, b) => {
+        const timeA = moment(a.startTime, 'HH:mm:ss');
+        const timeB = moment(b.startTime, 'HH:mm:ss');
+        return timeA.diff(timeB);
+      });
 
-      // Update the tasks state with the fetched data
-      setTasks(data);
+      // Update the tasks state with the sorted data
+      setTasks(sortedTasks);
     } catch (error) {
       console.error('Error fetching tasks:', error);
     }
