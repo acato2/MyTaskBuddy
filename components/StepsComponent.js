@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 const StepsComponent = ({ taskId }) => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
   const [steps, setSteps] = useState([]);
 
   const updateStepStatus = useCallback(async (stepId) => {
@@ -22,32 +22,41 @@ const StepsComponent = ({ taskId }) => {
   }, []);
 
   useEffect(() => {
-
     const fetchSubsteps = async (taskId) => {
       try {
         const response = await fetch(`http://10.0.2.2:3000/substeps/${taskId}`);
         const data = await response.json();
         const substeps = data.substeps;
+  
+        // Find the index of the first step with status 0
+        const firstIncompleteStepIndex = substeps.findIndex(step => step.status === 0);
+  
+        // Set the current step to the index of the first incomplete step + 1
+        setCurrentStep(firstIncompleteStepIndex + 1);
+  
         setSteps(substeps);
       } catch (error) {
         console.error('Error fetching substeps:', error);
       }
     };
-
+  
     fetchSubsteps(taskId);
-  }, [taskId]);
+  }, [taskId, steps]);
+  
 
-  const handleStepCompletion = async() => {
+  const handleStepCompletion = async () => {
     const currentStepId = steps[currentStep - 1]?.id;
     if (currentStepId) {
-    await updateStepStatus(currentStepId);
-    setCurrentStep(currentStep + 1);
-  }
+      await updateStepStatus(currentStepId);
+      setCurrentStep((prevStep) => prevStep + 1);
+    }
   };
+  
 
-  const renderStepButton = (stepNumber) => {
+  const renderStepButton = (stepNumber, stepStatus) => {
     const isCurrentStep = currentStep === stepNumber;
-    const isCompletedStep = currentStep > stepNumber;
+    const isCompletedStep = stepStatus === 1;
+    
 
     let buttonText = '';
     let buttonStyle = {};
@@ -56,18 +65,10 @@ const StepsComponent = ({ taskId }) => {
       buttonText = 'Complete';
       buttonStyle = styles.completeButton;
     } else if (isCurrentStep) {
-      if (currentStep === 1) {
-        buttonText = 'Continue';
-        buttonStyle = styles.startButton;
-      } else if (currentStep === steps.length) {
-        buttonText = 'Finish';
-        buttonStyle = styles.finishButton;
-      } else {
         buttonText = 'Continue';
         buttonStyle = styles.continueButton;
-      }
     } else {
-      // Step is inactive
+      // Step is locked and inactive
       return (
         <View style={styles.inactiveStepIcon}>
           <Icon name="lock" size={22} color="gray" />
@@ -86,9 +87,10 @@ const StepsComponent = ({ taskId }) => {
     );
   };
 
-  const renderStepCard = (stepNumber, stepName, stepDescription, index) => {
+  const renderStepCard = (stepNumber, stepName, stepDescription, index, stepStatus) => {
     const isCurrentStep = currentStep === stepNumber;
-    const isCompletedStep = currentStep > stepNumber;
+    const isCompletedStep = stepStatus === 1;
+   // console.log(stepStatus)
 
     const stepCardStyle = [
       styles.stepCard,
@@ -120,7 +122,7 @@ const StepsComponent = ({ taskId }) => {
           <Text style={stepNameStyle}>{stepName}</Text>
           <Text style={styles.stepDescription}>{stepDescription}</Text>
         </View>
-        {renderStepButton(stepNumber)}
+        {renderStepButton(stepNumber, stepStatus)}
       </View>
     );
   };
@@ -128,7 +130,7 @@ const StepsComponent = ({ taskId }) => {
   return (
     <View style={styles.container}>
       {steps.map((step, index) =>
-        renderStepCard(index + 1, step.stepName, step.description, index)
+        renderStepCard(index + 1, step.stepName, step.description, index, step.status)
       )}
     </View>
   );
@@ -210,19 +212,9 @@ const styles = StyleSheet.create({
     borderColor: '#1a75ff',
     backgroundColor: 'white',
   },
-  startButton: {
-    backgroundColor: '#66b3ff',
-    borderColor: '#66b3ff',
-    borderRadius: 15,
-  },
   continueButton: {
     backgroundColor: '#66b3ff',
     borderColor: '#66b3ff',
-    borderRadius: 15,
-  },
-  finishButton: {
-    backgroundColor: '#333371',
-    borderColor: '#333371',
     borderRadius: 15,
   },
   completeButton: {

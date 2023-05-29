@@ -186,7 +186,7 @@ app.get('/substeps/:taskId', async (req, res) => {
   const { taskId } = req.params;
   try {
     const result = await client.query(
-      'SELECT id, "stepName", description FROM substeps WHERE "taskId" = $1 ORDER BY id ASC',
+      'SELECT id, "stepName", description, status FROM substeps WHERE "taskId" = $1 ORDER BY id ASC',
       [taskId]
     );
     const substeps = result.rows;
