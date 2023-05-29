@@ -2,23 +2,30 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native';
 import ProgressBar from './ProgressBar';
 
+const formatTime = (time) => {
+  const [hours, minutes] = time.split(':');
+  return `${hours}:${minutes}`;
+};
+
 const TaskCard = ({ startTime, endTime, activity, progress, location, onPress }) => {
+  const formattedStartTime = formatTime(startTime);
+  const formattedEndTime = formatTime(endTime);
+
   return (
-    <View style={styles.card} >
+    <View style={styles.card}>
       <TouchableOpacity onPress={onPress}>
-      <Text style={styles.activity}>{activity}</Text>
-      <Image source={require("../assets/options.png")} style={styles.newImage}></Image>
-      <View style={styles.container}>
-        <Image source={require("../assets/clock.png")} style={styles.clock}></Image>
-        <View style={styles.timeContainer}>
-          <Text style={styles.time}>{startTime} - {endTime}</Text>
-          <Text style={styles.locationText}>{location}</Text>
-          <Image source={require("../assets/placeholder.png")} style={styles.locationIcon}></Image>
+        <Text style={styles.activity}>{activity}</Text>
+        <Image source={require("../assets/options.png")} style={styles.newImage} />
+        <View style={styles.container}>
+          <Image source={require("../assets/clock.png")} style={styles.clock} />
+          <View style={styles.timeContainer}>
+            <Text style={styles.time}>{formattedStartTime} - {formattedEndTime}</Text>
+            <Text style={styles.locationText}>{location}</Text>
+            <Image source={require("../assets/placeholder.png")} style={styles.locationIcon} />
+          </View>
         </View>
-      </View>
 
-      <ProgressBar progress={progress} />
-
+        <ProgressBar progress={progress} />
       </TouchableOpacity>
     </View>
   );
