@@ -15,11 +15,20 @@ const StepsComponent = ({ taskId }) => {
         },
         body: JSON.stringify({ stepId, status: 1 }),
       });
-      // Handle the response as needed
+      
+      if (response.ok) {
+        const updatedSteps = steps.map((step) => {
+          if (step.id === stepId) {
+            return { ...step, status: 1 };
+          }
+          return step;
+        });
+        setSteps(updatedSteps);
+      }
     } catch (error) {
       console.error('Error updating step status:', error);
     }
-  }, []);
+  }, [steps]);
 
   useEffect(() => {
     const fetchSubsteps = async (taskId) => {
@@ -27,22 +36,21 @@ const StepsComponent = ({ taskId }) => {
         const response = await fetch(`http://10.0.2.2:3000/substeps/${taskId}`);
         const data = await response.json();
         const substeps = data.substeps;
-  
+
         // Find the index of the first step with status 0
         const firstIncompleteStepIndex = substeps.findIndex(step => step.status === 0);
-  
+
         // Set the current step to the index of the first incomplete step + 1
         setCurrentStep(firstIncompleteStepIndex + 1);
-  
+
         setSteps(substeps);
       } catch (error) {
         console.error('Error fetching substeps:', error);
       }
     };
-  
+
     fetchSubsteps(taskId);
-  }, [taskId, steps]);
-  
+  }, [taskId]);
 
   const handleStepCompletion = async () => {
     const currentStepId = steps[currentStep - 1]?.id;
@@ -51,12 +59,10 @@ const StepsComponent = ({ taskId }) => {
       setCurrentStep((prevStep) => prevStep + 1);
     }
   };
-  
 
   const renderStepButton = (stepNumber, stepStatus) => {
     const isCurrentStep = currentStep === stepNumber;
     const isCompletedStep = stepStatus === 1;
-    
 
     let buttonText = '';
     let buttonStyle = {};
@@ -65,8 +71,8 @@ const StepsComponent = ({ taskId }) => {
       buttonText = 'Complete';
       buttonStyle = styles.completeButton;
     } else if (isCurrentStep) {
-        buttonText = 'Continue';
-        buttonStyle = styles.continueButton;
+      buttonText = 'Continue';
+      buttonStyle = styles.continueButton;
     } else {
       // Step is locked and inactive
       return (
@@ -90,7 +96,6 @@ const StepsComponent = ({ taskId }) => {
   const renderStepCard = (stepNumber, stepName, stepDescription, index, stepStatus) => {
     const isCurrentStep = currentStep === stepNumber;
     const isCompletedStep = stepStatus === 1;
-   // console.log(stepStatus)
 
     const stepCardStyle = [
       styles.stepCard,
