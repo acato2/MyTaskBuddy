@@ -19,6 +19,22 @@ const StepsComponent = ({ taskId }) => {
       console.error('Error updating task status:', error);
     }
   };
+  const updateTaskProgress = useCallback(async (taskId) => {
+    try {
+      const completedSteps = steps.filter((step) => step.status === 1);
+      const progress = ((completedSteps.length + 1) / steps.length )*100;
+
+      await fetch(`http://10.0.2.2:3000/tasks/update-progress/${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ progress }),
+      });
+    } catch (error) {
+      console.error('Error updating task progress:', error);
+    }
+  }, [steps]);
 
   const updateStepStatus = useCallback(async (stepId) => {
     try {
@@ -38,6 +54,7 @@ const StepsComponent = ({ taskId }) => {
           return step;
         });
         setSteps(updatedSteps);
+        await updateTaskProgress(taskId);
         // Check if all steps are completed
         const allStepsCompleted = updatedSteps.every((step) => step.status === 1);
         if (allStepsCompleted) {
@@ -48,7 +65,7 @@ const StepsComponent = ({ taskId }) => {
     } catch (error) {
       console.error('Error updating step status:', error);
     }
-  }, [steps]);
+  }, [steps, taskId, updateTaskProgress]);
 
   useEffect(() => {
     const fetchSubsteps = async (taskId) => {

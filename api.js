@@ -214,6 +214,23 @@ app.put('/tasks/:taskId', async (req, res) => {
   }
 });
 
+app.put('/tasks/update-progress/:taskId', async (req, res) => {
+  const { taskId } = req.params;
+  const { progress } = req.body;
+
+  try {
+    // Update the progress of the task in the tasks table
+    const query = 'UPDATE tasks SET progress = $1 WHERE id = $2';
+    const values = [progress, taskId];
+    await client.query(query, values);
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Error updating task progress:', error);
+    res.sendStatus(500);
+  }
+});
+
 app.get('/tasks/:taskId/status', async (req, res) => {
   const { taskId } = req.params;
 
