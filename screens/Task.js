@@ -12,6 +12,12 @@ import {
 } from 'react-native';
 import StepsComponent from '../components/StepsComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
+
+const formatTime = (time) => {
+  const [hours, minutes] = time.split(':');
+  return `${hours}:${minutes}`;
+};
 
 const Task = ({ route, navigation }) => {
   const { taskId, activityName, date, startTime, endTime, location } = route.params; // getting the activity name from the route params
@@ -20,6 +26,9 @@ const Task = ({ route, navigation }) => {
   const [isWhiteContainerVisible, setIsWhiteContainerVisible] = useState(false);
   const slideUpAnimation = useRef(new Animated.Value(0)).current;
   const [modalVisible, setModalVisible] = useState(false);
+  const formattedDate = moment(date).format('dddd D. MMMM YYYY');
+  const formattedStartTime = formatTime(startTime);
+  const formattedEndTime = formatTime(endTime);
 
   const fetchFirstName = async () => {
     try {
@@ -162,14 +171,14 @@ const Task = ({ route, navigation }) => {
           <Image source={require('../assets/schedule.png')} style={styles.image} />
           <View style={styles.textContainer}>
             <Text style={styles.boldText}>Datum:</Text>
-            <Text style={styles.regularText}>{date}</Text>
+            <Text style={styles.regularText}>{formattedDate}</Text>
           </View>
         </View>
         <View style={styles.row}>
           <Image source={require('../assets/clock.png')} style={styles.image} />
           <View style={styles.textContainer}>
             <Text style={styles.boldText}>Trajanje:</Text>
-            <Text style={styles.regularText}>{startTime} - {endTime}</Text>
+            <Text style={styles.regularText}>{formattedStartTime} - {formattedEndTime}</Text>
           </View>
         </View>
         <View style={styles.row}>
@@ -274,7 +283,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    backgroundColor: '#e6f2ff',
+    backgroundColor: 'white',
     width: '80%',
     borderRadius: 10,
     paddingHorizontal: 20,
