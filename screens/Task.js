@@ -1,14 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Animated } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Animated,
+  Modal,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import StepsComponent from '../components/StepsComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Task = ({ route, navigation }) => {
-  const { taskId, activityName, date } = route.params; // getting the activity name from the route params
+  const { taskId, activityName, date, startTime, endTime, location } = route.params; // getting the activity name from the route params
   const [firstName, setFirstName] = useState('');
   const [status, setStatus] = useState(0);
   const [isWhiteContainerVisible, setIsWhiteContainerVisible] = useState(false);
   const slideUpAnimation = useRef(new Animated.Value(0)).current;
+  const [modalVisible, setModalVisible] = useState(false);
 
   const fetchFirstName = async () => {
     try {
@@ -91,12 +102,16 @@ const Task = ({ route, navigation }) => {
     }
   }, [isWhiteContainerVisible]);
 
+  const handleImagePress = () => {
+    setModalVisible(true);
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Image source={require('../assets/left.png')} style={styles.icon} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.menuIconContainer}>
+      <TouchableOpacity onPress={handleImagePress} style={styles.menuIconContainer}>
         <Image source={require('../assets/detail.png')} style={styles.menuIcon} />
       </TouchableOpacity>
       <View style={styles.blueContainer}>
@@ -107,10 +122,19 @@ const Task = ({ route, navigation }) => {
       </View>
       {isWhiteContainerVisible ? (
         <Animated.View
-          style={[styles.whiteContainer, { transform: [{ translateY: slideUpAnimation.interpolate({
-            inputRange: [0, 1],
-            outputRange: [500, 0],
-          }) }] }]}
+          style={[
+            styles.whiteContainer,
+            {
+              transform: [
+                {
+                  translateY: slideUpAnimation.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [500, 0],
+                  }),
+                },
+              ],
+            },
+          ]}
         >
           <ScrollView>
             <StepsComponent taskId={taskId} />
@@ -121,6 +145,49 @@ const Task = ({ route, navigation }) => {
           <Text style={styles.startButtonText}>Start Task</Text>
         </TouchableOpacity>
       )}
+
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+      <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+  <View style={styles.modalContainer}>
+    <View style={styles.modalContent}>
+      {/* Task details */}
+      <Text style={styles.modalHeading}>{activityName}</Text>
+      <View style={styles.modalDetails}>
+        <View style={styles.row}>
+          <Image source={require('../assets/schedule.png')} style={styles.image} />
+          <View style={styles.textContainer}>
+            <Text style={styles.boldText}>Datum:</Text>
+            <Text style={styles.regularText}>{date}</Text>
+          </View>
+        </View>
+        <View style={styles.row}>
+          <Image source={require('../assets/clock.png')} style={styles.image} />
+          <View style={styles.textContainer}>
+            <Text style={styles.boldText}>Trajanje:</Text>
+            <Text style={styles.regularText}>{startTime} - {endTime}</Text>
+          </View>
+        </View>
+        <View style={styles.row}>
+          <Image source={require('../assets/placeholder.png')} style={styles.image} />
+          <View style={styles.textContainer}>
+            <Text style={styles.boldText}>Lokacija:</Text>
+            <Text style={styles.regularText}>{location}</Text>
+          </View>
+        </View>
+      </View>
+      <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
+        <Text style={styles.closeButtonText}>Close</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</TouchableWithoutFeedback>
+
+      </Modal>
     </View>
   );
 };
@@ -200,6 +267,63 @@ const styles = StyleSheet.create({
     width: 100,
     alignSelf: 'center',
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#e6f2ff',
+    width: '80%',
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingTop: 30,
+    paddingBottom: 20,
+    borderWidth:2
+  },
+  modalHeading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    paddingBottom: 20,
+    textAlign: 'center',
+  },
+  modalDetails: {
+    marginTop: 20,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  image: {
+    width: 40,
+    height: 40,
+    marginRight: 10,
+  },
+  boldText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  regularText: {
+    fontSize: 15,
+  },
+  closeButton: {
+    backgroundColor: '#66ccff',
+    borderRadius: 20,
+    padding: 10,
+    marginTop: 20,
+    alignSelf: 'flex-end',
+    borderWidth:2,
+    width:'30%',
+  },
+  closeButtonText: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  
 });
 
 export default Task;

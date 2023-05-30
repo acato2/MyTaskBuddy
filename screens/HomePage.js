@@ -64,6 +64,9 @@ const HomePage = ({ navigation }) => {
                 taskId: task.id,
                 activityName: task.activity,
                 date: selectedDate.toString(),
+                startTime: task.startTime,
+                endTime: task.endTime,
+                location: task.location
               })
             }
           />
