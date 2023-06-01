@@ -199,12 +199,12 @@ app.get('/substeps/:taskId', async (req, res) => {
 
 app.put('/tasks/:taskId', async (req, res) => {
   const { taskId } = req.params;
-  const { status } = req.body;
+  const { status, userStartTime } = req.body;
 
   try {
-    // Update the status of the task in the tasks table
-    const query = 'UPDATE tasks SET status = $1 WHERE id = $2';
-    const values = [status, taskId];
+    // Update the status and userStartTime of the task in the tasks table
+    const query = 'UPDATE tasks SET status = $1, "userStartTime" = $2 WHERE id = $3';
+    const values = [status, userStartTime, taskId];
     await client.query(query, values);
 
     res.sendStatus(200);
@@ -213,6 +213,7 @@ app.put('/tasks/:taskId', async (req, res) => {
     res.sendStatus(500);
   }
 });
+
 
 app.put('/tasks/update-progress/:taskId', async (req, res) => {
   const { taskId } = req.params;

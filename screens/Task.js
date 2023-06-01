@@ -91,14 +91,16 @@ const Task = ({ route, navigation }) => {
 
   const startTask = async () => {
     try {
-      // Update the column status in the tasks table
-      // Make a request to your API to update the status of the task
+      // Get the current timestamp
+      const userStartTime = new Date().toLocaleString('bs-BA');
+      // Update the column status and userStartTime in the tasks table
+      // Make a request to your API to update task
       await fetch(`http://10.0.2.2:3000/tasks/${taskId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ status: 1 }),
+        body: JSON.stringify({ status: 1, userStartTime }),
       });
 
       // Set the whiteContainer visibility to true
