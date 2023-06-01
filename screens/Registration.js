@@ -122,7 +122,8 @@ class Registration extends Component {
             padding: 10,
             color: '#000000',
             fontSize:width*0.04,
-            marginBottom:-30
+            marginBottom:-30,
+            marginHorizontal:-10
 
         };
         const handleBackButtonPress = () => {
@@ -229,7 +230,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: height * 0.2,
+        marginTop: height * 0.15,
         borderTopRightRadius: 0.15 * height,
         paddingBottom:'100%'
 
@@ -279,7 +280,7 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        top: 10,
+        top: 0,
         left: 10,
         zIndex: 1
       }
