@@ -32,6 +32,23 @@ const Task = ({ route, navigation }) => {
 
   const [congratulationVisible, setCongratulationVisible] = useState(false);
 
+  const [animateEmoji2, setAnimateEmoji2] = useState(false);
+  const slideAnimation = useRef(new Animated.Value(0)).current;
+ 
+  useEffect(() => {
+    if (animateEmoji2) {
+      Animated.timing(slideAnimation, {
+        toValue: 1,
+        duration: 1000, // Adjust the duration as needed
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [animateEmoji2]);
+  
+  
+  
+  
+  
   const fetchFirstName = async () => {
     try {
       // Logged user ID
@@ -126,12 +143,41 @@ const Task = ({ route, navigation }) => {
       <TouchableOpacity onPress={handleImagePress} style={styles.menuIconContainer}>
         <Image source={require('../assets/detail.png')} style={styles.menuIcon} />
       </TouchableOpacity>
-      <View style={styles.blueContainer}>
-      <Image source={congratulationVisible ? require('../assets/checklist.png') : require('../assets/planning2.png')} style={styles.topicon} />
-      <Text style={styles.lets}>{congratulationVisible ? "Great job, you've completed the task" : `Hi ${firstName}, let's`}</Text>
-        <Text style={styles.activityName}>{activityName}</Text>
-        <View style={styles.line} />
-      </View>
+        {animateEmoji2 ? (
+  
+            <Animated.View
+              style={[
+                styles.animatedContainer,
+                {
+                  transform: [
+                    {
+                      translateY: slideAnimation.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [-200, 0],
+                      }),
+                    },
+                  ],
+                },
+              ]}
+            >
+              <Image source={require('../assets/emoji2.png')} style={styles.topicon} />
+              <Text style={styles.lets}>Great job, you've completed the task</Text>
+              <Text style={styles.activityName}>{activityName}</Text>
+            </Animated.View>
+  
+        ) : (
+          <View style={styles.blueContainer}>
+            <Image
+              source={congratulationVisible ? require('../assets/checklist.png') : require('../assets/planning2.png')}
+              style={styles.topicon}
+            />
+            <Text style={styles.lets}>
+              {congratulationVisible ? "Task completed" : `Hi ${firstName}, let's start`}
+            </Text>
+            <Text style={styles.activityName}>{activityName}</Text>
+            <View style={styles.line} />
+          </View>
+        )}
       {isWhiteContainerVisible ? (
         <Animated.View
           style={[
@@ -149,7 +195,7 @@ const Task = ({ route, navigation }) => {
           ]}
         >
           <ScrollView>
-            <StepsComponent taskId={taskId} />
+            <StepsComponent taskId={taskId} onLastStepComplete={() => setAnimateEmoji2(true)} />
           </ScrollView>
         </Animated.View>
       ) : (
@@ -335,6 +381,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
+  animationContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 200,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  animatedContainer:{
+    alignItems: 'center',
+    marginTop: '25%',
+    marginBottom: 5,
+  }
   
 });
 

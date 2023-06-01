@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-const StepsComponent = ({ taskId }) => {
+const StepsComponent = ({ taskId, onLastStepComplete }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [steps, setSteps] = useState([]);
 
@@ -60,6 +60,8 @@ const StepsComponent = ({ taskId }) => {
         if (allStepsCompleted) {
           // Update the task status to 2
           await updateTaskStatus(taskId, 2);
+          // Trigger the callback function in the Task component
+         onLastStepComplete();
         }
       }
     } catch (error) {
