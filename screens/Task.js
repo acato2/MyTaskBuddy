@@ -9,6 +9,7 @@ import {
   Animated,
   Modal,
   TouchableWithoutFeedback,
+  Dimensions
 } from 'react-native';
 import StepsComponent from '../components/StepsComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,6 +19,7 @@ const formatTime = (time) => {
   const [hours, minutes] = time.split(':');
   return `${hours}:${minutes}`;
 };
+const { width, height } = Dimensions.get('window');
 
 const Task = ({ route, navigation }) => {
   const { taskId, activityName, date, startTime, endTime, location } = route.params; // getting the activity name from the route params
@@ -175,7 +177,6 @@ const Task = ({ route, navigation }) => {
               {congratulationVisible ? "Task completed" : `Hi ${firstName}, let's start`}
             </Text>
             <Text style={styles.activityName}>{activityName}</Text>
-            <View style={styles.line} />
           </View>
         )}
       {isWhiteContainerVisible ? (
@@ -257,74 +258,71 @@ const styles = StyleSheet.create({
   },
   blueContainer: {
     alignItems: 'center',
-    marginTop: '25%',
-    marginBottom: 5,
-  },
+    marginTop: height * 0.15,
+    marginBottom: height * 0.01,
+  },  
   icon: {
     position: 'absolute',
-    top: 10,
-    left: 10,
-    width: 40,
-    height: 40,
-    marginTop: 40,
-    marginStart: 5,
+    top: height * 0.02,
+    left: width * 0.02,
+    width: width * 0.1,
+    height: width * 0.1,
+    marginTop: height * 0.04,
+    marginStart: width * 0.01,
   },
   menuIconContainer: {
     position: 'absolute',
-    top: 10,
-    right: 10,
-    marginTop: 40,
-    marginEnd: 5,
+    top: height * 0.02,
+    right: width * 0.02,
+    marginTop: height * 0.04,
+    marginEnd: width * 0.01
   },
   menuIcon: {
-    width: 50,
-    height: 50,
+    width: width * 0.1,
+    height: width * 0.1,
   },
   whiteContainer: {
     flex: 1,
     backgroundColor: '#e6f2ff',
-    borderTopLeftRadius: 70,
-    borderTopRightRadius: 70,
+    borderTopLeftRadius: width * 0.2,
+    borderTopRightRadius: width * 0.2,
+    marginTop: height * 0.01,
+    marginBottom: height * 0.01,
   },
   lets: {
-    fontSize: 20,
+    fontSize: width*0.035,
     color: 'grey',
     textAlign: 'center',
     paddingTop: 20,
   },
   activityName: {
-    fontSize: 32,
+    fontSize: width*0.06,
     textAlign: 'center',
     fontWeight: 'bold',
     paddingTop: 5,
   },
-  line: {
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    marginVertical: 10,
-  },
   startButton: {
     backgroundColor: '#333371',
-    borderRadius: 20,
-    padding: 10,
-    marginTop: 30,
-    marginBottom: 10,
-    width: '60%',
-    borderWidth: 2,
+    borderRadius: width * 0.1,
+    padding: width * 0.015,
+    marginTop: height * 0.03,
+    marginBottom: height * 0.01,
+    width: width * 0.4,
+    borderWidth: width * 0.01,
     borderColor: 'darkblue',
     alignSelf: 'center',
-  },
+  },  
   startButtonText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize:width*0.045,
     textAlign: 'center',
   },
   topicon: {
-    height: 100,
-    width: 100,
+    width: width * 0.2,
+    height: width * 0.2,
     alignSelf: 'center',
-  },
+  },  
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -333,15 +331,15 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: 'white',
-    width: '80%',
-    borderRadius: 10,
-    paddingHorizontal: 20,
-    paddingTop: 30,
-    paddingBottom: 20,
-    borderWidth:2
-  },
+    width: width * 0.75,
+    borderRadius: width * 0.03,
+    paddingHorizontal: width * 0.05,
+    paddingTop: height * 0.03,
+    paddingBottom: height * 0.02,
+    borderWidth: 2,
+  },  
   modalHeading: {
-    fontSize: 24,
+    fontSize: width*0.05,
     fontWeight: 'bold',
     paddingBottom: 20,
     textAlign: 'center',
@@ -355,16 +353,16 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   image: {
-    width: 40,
-    height: 40,
+    width: width*0.09,
+    height: width*0.09,
     marginRight: 10,
   },
   boldText: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: width*0.035,
   },
   regularText: {
-    fontSize: 15,
+    fontSize: width*0.03,
   },
   closeButton: {
     backgroundColor: '#66ccff',
@@ -378,18 +376,8 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: 'black',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: width*0.033,
     textAlign: 'center',
-  },
-  animationContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 200,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   animatedContainer:{
     alignItems: 'center',

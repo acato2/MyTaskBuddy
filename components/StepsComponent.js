@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet,Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+
+const { width, height } = Dimensions.get('window');
 
 const StepsComponent = ({ taskId, onLastStepComplete }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -179,24 +181,27 @@ const StepsComponent = ({ taskId, onLastStepComplete }) => {
     </View>
   );
 };
+const stepCardPadding = width * 0.05;
+const stepCardMarginHorizontal = width * 0.1;
+const stepNumberSize = width * 0.08;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 32,
+    paddingHorizontal: width * 0.04,
+    paddingTop: height * 0.03,
   },
   stepCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
-    padding: 16,
-    borderRadius: 15,
-    borderWidth: 2,
+    marginBottom: height * 0.02,
+    padding: height * 0.02,
+    borderRadius: width * 0.04,
+    borderWidth: width * 0.006,
     borderColor: '#d9d9d9',
     backgroundColor: 'white',
-    paddingLeft: 40,
-    marginHorizontal: 20,
+    paddingLeft: width * 0.1,
+    marginHorizontal: stepCardMarginHorizontal,
   },
   completedStepCard: {
     borderColor: '#00b386',
@@ -208,11 +213,11 @@ const styles = StyleSheet.create({
   },
   stepNumber: {
     position: 'absolute',
-    left: -20, // Adjust this value as needed for positioning
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    borderWidth: 2,
+    left: -stepNumberSize / 2, // Adjust this value as needed for positioning
+    width: stepNumberSize,
+    height: stepNumberSize,
+    borderRadius: stepNumberSize / 2,
+    borderWidth: width * 0.006,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1, // Ensure the number is above the card background
@@ -226,7 +231,7 @@ const styles = StyleSheet.create({
   },
   stepNumberText: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: width * 0.04,
     color: 'black',
   },
   completedStepNumber: {
@@ -235,46 +240,51 @@ const styles = StyleSheet.create({
   },
   stepName: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: width * 0.04,
   },
   completedStepName: {
     color: '#00b377',
   },
   stepContent: {
     flex: 1,
-    marginRight: 16,
+    marginRight: width * 0.04,
   },
   stepDescription: {
-    marginTop: 8,
+    marginTop: height * 0.01,
     color: 'grey',
+    fontSize: width * 0.03
   },
   stepButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 4,
-    borderWidth: 1,
+    paddingHorizontal: width * 0.03,
+    paddingVertical: height * 0.01,
+    borderRadius: width * 0.01,
+    borderWidth: width * 0.003,
     borderColor: '#1a75ff',
     backgroundColor: 'white',
   },
   continueButton: {
     backgroundColor: '#66b3ff',
     borderColor: '#66b3ff',
-    borderRadius: 15,
+    borderRadius: width * 0.045,
   },
   completeButton: {
     backgroundColor: '#00b377',
     borderColor: '#00b377',
-    borderRadius: 15,
+    borderRadius: width * 0.04,
   },
   stepButtonText: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: width * 0.03
   },
   checkmark: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: width * 0.05,
   },
+  inactiveStepIcon:{
+    marginRight:10
+  }
 });
 
 export default StepsComponent;
