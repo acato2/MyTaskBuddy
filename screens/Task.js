@@ -30,6 +30,8 @@ const Task = ({ route, navigation }) => {
   const formattedStartTime = formatTime(startTime);
   const formattedEndTime = formatTime(endTime);
 
+  const [congratulationVisible, setCongratulationVisible] = useState(false);
+
   const fetchFirstName = async () => {
     try {
       // Logged user ID
@@ -59,6 +61,7 @@ const Task = ({ route, navigation }) => {
         const taskStatus = data.status;
         setStatus(taskStatus);
         setIsWhiteContainerVisible(taskStatus === 1 || taskStatus === 2); // Update the visibility condition
+        setCongratulationVisible(taskStatus === 2);
       } else {
         console.error('Error fetching task status:', data.error);
       }
@@ -124,8 +127,8 @@ const Task = ({ route, navigation }) => {
         <Image source={require('../assets/detail.png')} style={styles.menuIcon} />
       </TouchableOpacity>
       <View style={styles.blueContainer}>
-        <Image source={require('../assets/planning2.png')} style={styles.topicon} />
-        <Text style={styles.lets}>Hi {firstName}, let's</Text>
+      <Image source={congratulationVisible ? require('../assets/checklist.png') : require('../assets/planning2.png')} style={styles.topicon} />
+      <Text style={styles.lets}>{congratulationVisible ? "Great job, you've completed the task" : `Hi ${firstName}, let's`}</Text>
         <Text style={styles.activityName}>{activityName}</Text>
         <View style={styles.line} />
       </View>
