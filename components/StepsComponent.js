@@ -10,12 +10,23 @@ const StepsComponent = ({ taskId, onLastStepComplete }) => {
 
   const updateTaskStatus = async (taskId, status) => {
     try {
-      await fetch(`http://10.0.2.2:3000/tasks/${taskId}`, {
+      // Get the current timestamp
+      const userEndTime = new Date().toLocaleString('bs-BA');
+
+      await fetch(`http://10.0.2.2:3000/tasks/${taskId}/update-status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ status }),
+      });
+      // Make a request to your API to update userEndTime
+      await fetch(`http://10.0.2.2:3000/tasks/${taskId}/update-userEndTime`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userEndTime }),
       });
     } catch (error) {
       console.error('Error updating task status:', error);

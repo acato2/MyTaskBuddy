@@ -197,14 +197,14 @@ app.get('/substeps/:taskId', async (req, res) => {
   }
 });
 
-app.put('/tasks/:taskId', async (req, res) => {
+app.put('/tasks/:taskId/update-status', async (req, res) => {
   const { taskId } = req.params;
-  const { status, userStartTime } = req.body;
+  const { status} = req.body;
 
   try {
     // Update the status and userStartTime of the task in the tasks table
-    const query = 'UPDATE tasks SET status = $1, "userStartTime" = $2 WHERE id = $3';
-    const values = [status, userStartTime, taskId];
+    const query = 'UPDATE tasks SET status = $1 WHERE id = $2';
+    const values = [status, taskId];
     await client.query(query, values);
 
     res.sendStatus(200);
@@ -213,6 +213,39 @@ app.put('/tasks/:taskId', async (req, res) => {
     res.sendStatus(500);
   }
 });
+app.put('/tasks/:taskId/update-userStartTime', async (req, res) => {
+  const { taskId } = req.params;
+  const { userStartTime} = req.body;
+
+  try {
+    // Update the status and userStartTime of the task in the tasks table
+    const query = 'UPDATE tasks SET "userStartTime" = $1 WHERE id = $2';
+    const values = [userStartTime, taskId];
+    await client.query(query, values);
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Error updating userStartTime:', error);
+    res.sendStatus(500);
+  }
+});
+app.put('/tasks/:taskId/update-userEndTime', async (req, res) => {
+  const { taskId } = req.params;
+  const { userEndTime} = req.body;
+
+  try {
+    // Update the status and userStartTime of the task in the tasks table
+    const query = 'UPDATE tasks SET "userEndTime" = $1 WHERE id = $2';
+    const values = [userEndTime, taskId];
+    await client.query(query, values);
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Error updating userEndTime:', error);
+    res.sendStatus(500);
+  }
+});
+
 
 
 app.put('/tasks/update-progress/:taskId', async (req, res) => {

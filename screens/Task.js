@@ -93,14 +93,21 @@ const Task = ({ route, navigation }) => {
     try {
       // Get the current timestamp
       const userStartTime = new Date().toLocaleString('bs-BA');
-      // Update the column status and userStartTime in the tasks table
-      // Make a request to your API to update task
-      await fetch(`http://10.0.2.2:3000/tasks/${taskId}`, {
+      // Make a request to your API to update task status
+      await fetch(`http://10.0.2.2:3000/tasks/${taskId}/update-status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ status: 1, userStartTime }),
+        body: JSON.stringify({ status: 1}),
+      });
+      // Make a request to your API to update userStartTime
+      await fetch(`http://10.0.2.2:3000/tasks/${taskId}/update-userStartTime`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userStartTime}),
       });
 
       // Set the whiteContainer visibility to true
