@@ -7,14 +7,17 @@ const formatTime = (time) => {
   return `${hours}:${minutes}`;
 };
 
-const TaskCard = ({ startTime, endTime, activity, progress, location, onPress }) => {
+const TaskCard = ({ startTime, endTime, activity, progress, location, onPress, priority }) => {
   const formattedStartTime = formatTime(startTime);
   const formattedEndTime = formatTime(endTime);
 
   return (
     <View style={styles.card}>
       <TouchableOpacity onPress={onPress}>
+      <View style={styles.container2}>
         <Text style={styles.activity}>{activity}</Text>
+        {priority === 1 && <Text style={styles.urgentText}>URGENT</Text>}
+        </View>
         <Image source={require("../assets/options.png")} style={styles.newImage} />
         <View style={styles.container}>
           <Image source={require("../assets/clock.png")} style={styles.clock} />
@@ -93,7 +96,21 @@ const styles = StyleSheet.create({
   locationIcon:{
     width: deviceWidth*0.06,
     height: deviceWidth*0.06,
-  }
+  },
+  urgentText: {
+    color: '#e60000', 
+    backgroundColor:'#ffcccc',
+    padding:5,
+    borderRadius:5,
+    marginLeft:deviceWidth*0.28,
+    fontSize:deviceWidth*0.028,
+    fontWeight:'bold',
+    marginTop:-10,
+  },
+  container2: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
 });
 
 export default TaskCard;

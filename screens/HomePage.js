@@ -59,6 +59,7 @@ const HomePage = ({ navigation }) => {
             activity={task.activity}
             progress={task.progress}
             location={task.location}
+            priority={task.priority}
             onPress={() =>
               navigation.navigate('Task', {
                 taskId: task.id,
