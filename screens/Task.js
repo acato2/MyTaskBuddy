@@ -26,7 +26,7 @@ const Task = ({ route, navigation }) => {
   const [isWhiteContainerVisible, setIsWhiteContainerVisible] = useState(false);
   const slideUpAnimation = useRef(new Animated.Value(0)).current;
   const [modalVisible, setModalVisible] = useState(false);
-  const formattedDate = moment(date).format('dddd D. MMMM YYYY');
+  const formattedDate = moment(new Date(date)).format('dddd D. MMMM YYYY');
   const formattedStartTime = formatTime(startTime);
   const formattedEndTime = formatTime(endTime);
 
