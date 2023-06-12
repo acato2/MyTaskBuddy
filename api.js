@@ -13,7 +13,7 @@ app.use(cors());
 
 
 
-app.post('/login', async (req, res) => {
+app.post('/users/login', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
   
@@ -46,7 +46,7 @@ app.post('/login', async (req, res) => {
     }
   });
 
-app.post('/register', async(req,res) => {
+app.post('/users/register', async(req,res) => {
   try{
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
@@ -287,7 +287,7 @@ app.get('/tasks/:taskId/status', async (req, res) => {
 });
 
 // Update step status endpoint
-app.post('/update-step', async (req, res) => {
+app.post('/substeps/update-step', async (req, res) => {
   const { stepId, status } = req.body;
 
   try {

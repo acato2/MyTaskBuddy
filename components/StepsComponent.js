@@ -51,7 +51,7 @@ const StepsComponent = ({ taskId, onLastStepComplete }) => {
 
   const updateStepStatus = useCallback(async (stepId) => {
     try {
-      const response = await fetch('http://10.0.2.2:3000/update-step', {
+      const response = await fetch('http://10.0.2.2:3000/substeps/update-step', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
