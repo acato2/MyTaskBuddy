@@ -9,12 +9,13 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const avatars = [
-    { id: 1, url: 'https://cdn-icons-png.flaticon.com/512/4333/4333609.png' },
-    { id: 2, url: 'https://cdn-icons-png.flaticon.com/512/1154/1154448.png' },
-    { id: 3, url: 'https://cdn-icons-png.flaticon.com/512/1154/1154455.png' },
-    { id: 4, url: 'https://cdn-icons-png.flaticon.com/512/706/706831.png' },
-    { id: 5, url: 'https://cdn-icons-png.flaticon.com/512/1154/1154955.png' },
-    { id: 6, url: 'https://cdn-icons-png.flaticon.com/512/1154/1154480.png' },
+    { id: 1, url: 'https://cdn-icons-png.flaticon.com/512/847/847969.png' },
+    { id: 2, url: 'https://cdn-icons-png.flaticon.com/512/4333/4333609.png' },
+    { id: 3, url: 'https://cdn-icons-png.flaticon.com/512/1154/1154448.png' },
+    { id: 4, url: 'https://cdn-icons-png.flaticon.com/512/1154/1154455.png' },
+    { id: 5, url: 'https://cdn-icons-png.flaticon.com/512/706/706831.png' },
+    { id: 6, url: 'https://cdn-icons-png.flaticon.com/512/1154/1154955.png' },
+    { id: 7, url: 'https://cdn-icons-png.flaticon.com/512/1154/1154480.png' },
 ];
 
 const { width, height } = Dimensions.get('window');
