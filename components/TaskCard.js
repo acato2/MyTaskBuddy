@@ -16,7 +16,7 @@ const TaskCard = ({ startTime, endTime, activity, progress, location, onPress, p
       <TouchableOpacity onPress={onPress}>
       <View style={styles.container2}>
         <Text style={styles.activity}>{activity}</Text>
-        {priority === 1 && <Text style={styles.urgentText}>URGENT</Text>}
+        {priority === 1 && <Text style={styles.urgentText}>HITNO</Text>}
         </View>
         <Image source={require("../assets/options.png")} style={styles.newImage} />
         <View style={styles.container}>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#ffcccc',
     padding:5,
     borderRadius:5,
-    marginLeft:deviceWidth*0.28,
+    marginLeft:deviceWidth*0.3,
     fontSize:deviceWidth*0.028,
     fontWeight:'bold',
     marginTop:-10,

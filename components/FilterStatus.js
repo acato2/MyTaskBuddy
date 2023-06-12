@@ -46,7 +46,7 @@ const FilterStatus = ({ setFilterStatus }) => {
             inprogress && styles.activeFilterButtonText,
           ]}
         >
-          In progress
+          U toku
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -62,7 +62,7 @@ const FilterStatus = ({ setFilterStatus }) => {
             allTasks && styles.allTasksFilterButtonText,
           ]}
         >
-          To Do
+          Za obaviti
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -78,7 +78,7 @@ const FilterStatus = ({ setFilterStatus }) => {
             completed && styles.completedFilterButtonText,
           ]}
         >
-          Done
+          Završeno
         </Text>
       </TouchableOpacity>
     </View>

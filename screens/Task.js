@@ -172,7 +172,7 @@ const Task = ({ route, navigation }) => {
               ]}
             >
               <Image source={require('../assets/emoji2.png')} style={styles.topicon} />
-              <Text style={styles.lets}>Great job, you've completed the task</Text>
+              <Text style={styles.lets}>Bravo, uspješno ste obavili zadatak</Text>
               <Text style={styles.activityName}>{activityName}</Text>
             </Animated.View>
   
@@ -183,7 +183,7 @@ const Task = ({ route, navigation }) => {
               style={styles.topicon}
             />
             <Text style={styles.lets}>
-              {congratulationVisible ? "Task completed" : `Hi ${firstName}, let's start`}
+              {congratulationVisible ? "Završen zadatak" : `Zdravo ${firstName}, idemo raditi zadatak`}
             </Text>
             <Text style={styles.activityName}>{activityName}</Text>
           </View>

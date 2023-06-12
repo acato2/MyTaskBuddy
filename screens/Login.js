@@ -38,10 +38,10 @@ const Login = ({ navigation }) => {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Invalid username or password
-        setMessage('Invalid username or password');
+        setMessage('Neispravno korisničko ime ili lozinka');
       } else {
         // Other errors
-        setMessage('An error occurred');
+        setMessage('Došlo je do greške');
       }
     }
   };

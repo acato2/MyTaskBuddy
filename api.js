@@ -57,17 +57,17 @@ app.post('/register', async(req,res) => {
 
     //Check for empty fields
     if(!firstname || !lastname || !username || !password) {
-      throw new Error('All fields are required');
+      throw new Error('Sva polja trebaju biti popunjena!');
     }
     // Check the format of firstname and lastname
     const nameRegex = /^[A-Za-z]+$/;
     if (!nameRegex.test(firstname) || !nameRegex.test(lastname)) {
-      throw new Error('Invalid format for firstname or lastname');
+      throw new Error('Nevažeći format za ime ili prezime');
     }
     // Check if the username already exists
     const userExists = await client.query('SELECT * FROM users WHERE username = $1', [username]);
     if (userExists.rows.length > 0) {
-      throw new Error('Username already exists');
+      throw new Error('Korisničko ime već postoji');
     }
 
     // Insert the parameters into the users table

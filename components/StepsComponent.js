@@ -120,10 +120,10 @@ const StepsComponent = ({ taskId, onLastStepComplete }) => {
     let buttonStyle = {};
 
     if (isCompletedStep) {
-      buttonText = 'Complete';
+      buttonText = 'Završeno';
       buttonStyle = styles.completeButton;
     } else if (isCurrentStep) {
-      buttonText = 'Continue';
+      buttonText = 'Dalje';
       buttonStyle = styles.continueButton;
     } else {
       // Step is locked and inactive
