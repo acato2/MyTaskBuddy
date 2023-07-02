@@ -210,7 +210,7 @@ const Task = ({ route, navigation }) => {
         </Animated.View>
       ) : (
         <TouchableOpacity style={styles.startButton} onPress={startTask} disabled={status !== 0}>
-          <Text style={styles.startButtonText}>Start Task</Text>
+          <Text style={styles.startButtonText}>Započni</Text>
         </TouchableOpacity>
       )}
 
