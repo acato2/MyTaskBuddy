@@ -22,7 +22,7 @@ const formatTime = (time) => {
 const { width, height } = Dimensions.get('window');
 
 const Task = ({ route, navigation }) => {
-  const { taskId, activityName, date, startTime, endTime, location } = route.params; // getting the activity name from the route params
+  const { taskId, activityName, date, startTime, endTime, location, parentId } = route.params; // getting the activity name from the route params
   const [firstName, setFirstName] = useState('');
   const [status, setStatus] = useState(0);
   const [isWhiteContainerVisible, setIsWhiteContainerVisible] = useState(false);
@@ -32,6 +32,7 @@ const Task = ({ route, navigation }) => {
   const formattedStartTime = formatTime(startTime);
   const formattedEndTime = formatTime(endTime);
 
+  const [parentDetails, setParentDetails] = useState('');
   const [congratulationVisible, setCongratulationVisible] = useState(false);
 
   const [animateEmoji2, setAnimateEmoji2] = useState(false);
@@ -127,9 +128,23 @@ const Task = ({ route, navigation }) => {
     }
   };
 
+  const fetchParentDetails = async () => {
+    try {
+      const response = await fetch(`http://10.0.2.2:3000/parents/${parentId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch parent details');
+      }
+      const data = await response.json();
+      setParentDetails(data);
+    } catch (error) {
+      throw new Error('Failed to fetch parent details');
+    }
+  };
+
   useEffect(() => {
     fetchFirstName();
     fetchTaskStatus();
+    fetchParentDetails();
   }, []);
 
   useEffect(() => {
@@ -245,6 +260,13 @@ const Task = ({ route, navigation }) => {
           <View style={styles.textContainer}>
             <Text style={styles.boldText}>Lokacija:</Text>
             <Text style={styles.regularText}>{location}</Text>
+          </View>
+        </View>
+        <View style={styles.row}>
+          <Image source={require('../assets/ancestors.png')} style={styles.image} />
+          <View style={styles.textContainer}>
+            <Text style={styles.boldText}>Zadatak zadao/la:</Text>
+            <Text style={styles.regularText}>{parentDetails.firstname} {parentDetails.lastname}</Text>
           </View>
         </View>
       </View>

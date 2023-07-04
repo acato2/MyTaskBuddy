@@ -302,6 +302,28 @@ app.post('/substeps/update-step', async (req, res) => {
   }
 });
 
+// Get parent details endpoint
+app.get('/parents/:parentId', async (req, res) => {
+  const { parentId } = req.params;
+
+  try {
+    const query = 'SELECT firstname , lastname FROM parents WHERE id = $1';
+    const values = [parentId];
+    const result = await client.query(query, values);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Parent not found' });
+    }
+
+    const parentDetails = result.rows[0];
+    res.status(200).json(parentDetails);
+  } catch (error) {
+    console.error('Error fetching parent details:', error);
+    res.sendStatus(500);
+  }
+});
+
+
 
 
 app.listen(3000, ()=>{

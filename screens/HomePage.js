@@ -67,7 +67,8 @@ const HomePage = ({ navigation }) => {
                 date: selectedDate.toString(),
                 startTime: task.startTime,
                 endTime: task.endTime,
-                location: task.location
+                location: task.location,
+                parentId: task.parentId
               })
             }
           />
