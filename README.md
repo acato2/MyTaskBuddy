@@ -20,29 +20,29 @@ The main goal of this application is to assist people with Down syndrome in effi
 
 - Login
 
-![](https://github.com/acato2/MyTaskBuddy/blob/main/assets/videos/login.gif)
+![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/login.gif)
 
 - Registration
 
-![](https://github.com/acato2/MyTaskBuddy/blob/main/assets/videos/registration.gif)
+![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/registration.gif)
 
 - Daily Task Overview, Task Filtering and Display of Priority Task
 
-![](https://github.com/acato2/MyTaskBuddy/blob/main/assets/videos/tasks.gif)
+![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/tasks.gif)
 
 - Hierarchical Task Execution & Task Progress Visualization through a progress bar
 
-![](https://github.com/acato2/MyTaskBuddy/blob/main/assets/videos/substeps1.gif)
-![](https://github.com/acato2/MyTaskBuddy/blob/main/assets/videos/substeps2.gif)
-![](https://github.com/acato2/MyTaskBuddy/blob/main/assets/videos/substeps3.gif)
+![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/substeps1.gif)
+![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/substeps2.gif)
+![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/substeps3.gif)
 
 - Task Details Display
 
-![](https://github.com/acato2/MyTaskBuddy/blob/main/assets/videos/taskdetails.gif)
+![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/taskdetails.gif)
 
 - Customizable User Profile Management
 
-![](https://github.com/acato2/MyTaskBuddy/blob/main/assets/videos/editprofile.gif)
+![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/editprofile.gif)
 
 
 
@@ -61,7 +61,7 @@ The mobile application is designed for individuals with Down syndrome, while the
 
 The app automatically calculates the average time taken by the user to complete each task and sends this data to the connected web application in the Statistics section. 
 
-![](https://github.com/acato2/MyTaskBuddy/blob/main/assets/statistics.png)
+![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/statistics.png)
 
 This functionality provides parents or teachers with insights into the average time required for task completion and offers information about the user's progress.
 
