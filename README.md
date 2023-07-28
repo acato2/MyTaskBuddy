@@ -20,29 +20,29 @@ The main goal of this application is to assist people with Down syndrome in effi
 
 - Login
 
-![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/login.gif)
+<img src="https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/login.gif" height="600">
 
 - Registration
 
-![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/registration.gif)
+<img src="https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/registration.gif" height="600">
 
 - Daily Task Overview, Task Filtering and Display of Priority Task
 
-![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/tasks.gif)
+<img src="https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/tasks.gif" height="600">
 
 - Hierarchical Task Execution & Task Progress Visualization through a progress bar
 
-![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/substeps1.gif)
-![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/substeps2.gif)
-![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/substeps3.gif)
+<img src="https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/substeps1.gif" height="600">
+<img src="https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/substeps2.gif" height="600">
+<img src="https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/substeps3.gif" height="600">
 
 - Task Details Display
 
-![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/taskdetails.gif)
+<img src="https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/taskdetails.gif" height="600">
 
 - Customizable User Profile Management
 
-![](https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/editprofile.gif)
+<img src="https://github.com/acato2/MyTaskBuddy/blob/master/assets/videos/editprofile.gif" height="600">
 
 
 
@@ -53,7 +53,7 @@ The main goal of this application is to assist people with Down syndrome in effi
 ## Related
 
 
-The project successfully accomplished the integration of a web application and a mobile application called "MyTaskBuddy." 
+The successful integration of the mobile application with its namesake web application has been achieved.
 
 The mobile application is designed for individuals with Down syndrome, while the web application is utilized by parents and teachers to manage user tasks. Notably, both applications are connected to the same database, facilitating seamless data synchronization between the mobile and web platforms.
 
