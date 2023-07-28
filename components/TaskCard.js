@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#ffcccc',
     padding:5,
     borderRadius:5,
-    marginLeft:deviceWidth*0.3,
+    marginLeft:deviceWidth*0.25,
     fontSize:deviceWidth*0.028,
     fontWeight:'bold',
     marginTop:-10,
